@@ -1,54 +1,99 @@
 'use client';
 
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 import { intentDistributionData } from '@/app/call-explorer/mock-data';
 import { Target } from 'lucide-react';
 import { useIsMounted } from '@/hooks/use-is-mounted';
+import type { IntentSentimentItem } from '@/types/api';
 
-export function IntentDistributionChart() {
+// --- MOCK DATA (remove after API verified) ---
+// const intentDistributionData = [
+//   { name: 'Buy sneakers',               value: 26, fill: '#3b82f6' },
+//   { name: 'Price inquiry',              value: 24, fill: '#22c55e' },
+//   { name: 'Return item',                value: 18, fill: '#f59e0b' },
+//   { name: 'Check availability',         value: 16, fill: '#a855f7' },
+//   { name: 'Complaint about delivery',   value: 16, fill: '#ef4444' },
+// ];
+
+const INTENT_COLORS = ['#3b82f6', '#22c55e', '#f59e0b', '#a855f7', '#ef4444', '#f97316', '#14b8a6'];
+
+interface IntentDistributionChartProps {
+  data: IntentSentimentItem[];
+  loading?: boolean;
+}
+
+export function IntentDistributionChart({ data, loading }: IntentDistributionChartProps) {
   const mounted = useIsMounted();
   if (!mounted) return <div className="bg-white p-5 rounded-2xl border border-black/5 shadow-sm h-[320px] w-full" />;
+
+  // Build distribution from intent-sentiment data (use total per intent as the slice size)
+  // Fall back to mock when empty
+  const chartData = data && data.length > 0
+    ? data.map((item, idx) => {
+        const total = (Number(item.positive) || 0) + (Number(item.neutral) || 0) + (Number(item.negative) || 0);
+        return {
+          name:  item.intent,
+          value: total,
+          fill:  INTENT_COLORS[idx % INTENT_COLORS.length],
+        };
+      })
+    : intentDistributionData;
+
+  // Compute percentage labels
+  const grandTotal = chartData.reduce((sum, d) => sum + d.value, 0) || 1;
+
   return (
     <div className="bg-white p-5 rounded-2xl border border-black/5 shadow-sm h-[320px] flex flex-col relative w-full">
       <div className="flex items-center gap-2 mb-4">
         <Target size={20} className="text-red-500 shrink-0" />
         <h3 className="text-base font-bold text-gray-900">Intent Distribution</h3>
+        {loading && (
+          <span className="ml-auto text-xs text-gray-400 animate-pulse">Loading…</span>
+        )}
       </div>
-      
-      <div style={{ width: '100%', height: 240, position: 'relative' }}>
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={intentDistributionData}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={90}
-              paddingAngle={2}
-              dataKey="value"
-              stroke="none"
-            >
-              {intentDistributionData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Pie>
-            <Tooltip 
-              contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', fontWeight: 'bold', fontSize: '12px' }}
-              itemStyle={{ color: '#000' }}
-              formatter={(value: any) => [`${value}%`, 'Share']}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-        
-        {/* Custom labels matching image */}
-        <div className="absolute inset-0 pointer-events-none hidden md:block">
-           <span className="absolute top-[20%] right-[12%] text-sm font-bold text-[#3b82f6]">Buy sneakers (26%)</span>
-           <span className="absolute bottom-[20%] right-[2%] text-sm font-bold text-[#a855f7]">Check availability (16%)</span>
-           <span className="absolute bottom-[5%] left-[28%] text-sm font-bold text-[#ef4444]">Complaint about delivery (16%)</span>
-           <span className="absolute bottom-[20%] left-[8%] text-sm font-bold text-[#f59e0b]">Return item (18%)</span>
-           <span className="absolute top-[30%] left-[8%] text-sm font-bold text-[#22c55e]">Price inquiry (24%)</span>
+
+      {loading && data.length === 0 ? (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="w-36 h-36 rounded-full bg-gray-100 animate-pulse" />
         </div>
-      </div>
+      ) : (
+        <div style={{ width: '100%', height: 240, position: 'relative' }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={90}
+                paddingAngle={2}
+                dataKey="value"
+                stroke="none"
+              >
+                {chartData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.fill} />
+                ))}
+              </Pie>
+              <Tooltip
+                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', fontWeight: 'bold', fontSize: '12px' }}
+                formatter={(value: any, name: any) => [`${value} (${Math.round((value / grandTotal) * 100)}%)`, name]}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+
+          {/* Dynamic legend overlay — only show top 5 for readability */}
+          <div className="absolute bottom-0 left-0 right-0 flex flex-wrap gap-x-4 gap-y-1 justify-center pointer-events-none">
+            {chartData.slice(0, 5).map((item) => (
+              <div key={item.name} className="flex items-center gap-1">
+                <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.fill }} />
+                <span className="text-xs font-semibold text-gray-500 truncate max-w-[100px]">
+                  {item.name} ({Math.round((item.value / grandTotal) * 100)}%)
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

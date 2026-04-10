@@ -4,8 +4,37 @@ import { Users, Clock, Phone, CheckCircle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { mockConversionDrivers, mockPeakConversionTimes, mockCallOutcomes, mockConversionKeyInsights, mockWeeklyTrend } from '@/app/store-performance/mock-data';
 import { useIsMounted } from '@/hooks/use-is-mounted';
+import type { ConversionDriverItem } from '@/types/api';
 
-export function ConversionAttributionAnalysis() {
+// --- MOCK DATA (remove after API verified) ---
+// const mockConversionDrivers = [
+//   { driver: 'Product Availability Confirmed', conversions: 132, pct: '22.8%' },
+//   { driver: 'Size/Variant Match Found', conversions: 118, pct: '20.5%' },
+//   { driver: 'Store Pickup Offered', conversions: 92, pct: '18.2%' },
+// ];
+
+interface ConversionAttributionAnalysisProps {
+  data: ConversionDriverItem[];
+  loading?: boolean;
+}
+
+export function ConversionAttributionAnalysis({ data, loading }: ConversionAttributionAnalysisProps) {
+  // Map API data to display format; fall back to mock when empty
+  const drivers = data && data.length > 0
+    ? data.map(d => {
+        const converted    = Number(d.converted_avg)    || 0;
+        const nonConverted = Number(d.non_converted_avg) || 0;
+        const delta        = Number(d.delta)             || 0;
+        return {
+          driver:       d.dimension.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+          converted:    converted.toFixed(1),
+          nonConverted: nonConverted.toFixed(1),
+          delta:        delta > 0 ? `+${delta.toFixed(1)}` : delta.toFixed(1),
+          isPositive:   delta >= 0,
+        };
+      })
+    : null; // will fall through to mock below
+
   return (
     <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6 mb-6">
       <div className="flex items-center gap-3 mb-6">
@@ -16,22 +45,55 @@ export function ConversionAttributionAnalysis() {
           <h3 className="text-base font-bold text-gray-900">Conversion Attribution Analysis</h3>
           <p className="text-xs font-medium text-gray-400">What drives successful store conversions from calls</p>
         </div>
+        {loading && (
+          <span className="ml-auto text-xs text-gray-400 animate-pulse">Fetching live data…</span>
+        )}
       </div>
 
       {/* Top Conversion Drivers */}
       <div className="mb-8">
         <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">Top Conversion Drivers</h4>
-        <div className="space-y-3">
-          {mockConversionDrivers.map((driver, idx) => (
-            <div key={idx} className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0">
-              <span className="text-sm font-semibold text-gray-700">{driver.driver}</span>
-              <div className="flex items-center gap-4">
-                <span className="text-sm font-medium text-gray-400">{driver.conversions} conversions</span>
-                <span className="text-sm font-bold text-red-500 w-12 text-right">{driver.pct}</span>
+
+        {loading && !drivers ? (
+          <div className="space-y-3">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-8 bg-gray-100 rounded-xl animate-pulse" />
+            ))}
+          </div>
+        ) : drivers ? (
+          // Real API data — show scoring_audit dimension deltas
+          <div className="space-y-3">
+            {drivers.map((driver, idx) => (
+              <div key={idx} className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0">
+                <span className="text-sm font-semibold text-gray-700">{driver.driver}</span>
+                <div className="flex items-center gap-6">
+                  <span className="text-xs text-gray-400">
+                    Converted: <span className="font-semibold text-gray-600">{driver.converted}</span>
+                  </span>
+                  <span className="text-xs text-gray-400">
+                    Non-conv: <span className="font-semibold text-gray-600">{driver.nonConverted}</span>
+                  </span>
+                  <span className={`text-sm font-bold w-14 text-right ${driver.isPositive ? 'text-emerald-500' : 'text-red-500'}`}>
+                    Δ {driver.delta}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          // Mock fallback
+          <div className="space-y-3">
+            {mockConversionDrivers.map((driver, idx) => (
+              <div key={idx} className="flex items-center justify-between py-3 border-b border-gray-50 last:border-0">
+                <span className="text-sm font-semibold text-gray-700">{driver.driver}</span>
+                <div className="flex items-center gap-4">
+                  <span className="text-sm font-medium text-gray-400">{driver.conversions} conversions</span>
+                  <span className="text-sm font-bold text-red-500 w-12 text-right">{driver.pct}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Peak Conversion Times */}

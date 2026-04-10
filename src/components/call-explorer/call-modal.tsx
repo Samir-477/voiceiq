@@ -32,13 +32,14 @@ function prng(seed: number) {
   };
 }
 function seeded(id: string) {
-  const seed = id.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0);
+  const safeId = id || 'default-seed';  // guard against undefined
+  const seed = safeId.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0);
   return prng(Math.abs(seed));
 }
 function rInt(rng: () => number, min: number, max: number) {
   return Math.floor(rng() * (max - min + 1)) + min;
 }
-function pick<T>(rng: () => number, arr: T[]): T {
+function pick<T>(rng: () => number, arr: readonly T[]): T {
   return arr[Math.floor(rng() * arr.length)];
 }
 
@@ -95,14 +96,20 @@ const TRANSCRIPT_TEMPLATES: Record<string, string[][]> = {
 
 // ── Build per-call seeded data ────────────────────────────────────────────────
 function buildCallData(call: CallLog) {
-  const rng      = seeded(call.id);
+  // Use full UUID (_uuid) for seeding if available, else fall back to display id
+  const seedStr  = (call as any)._uuid || call.id || 'default-seed';
+  const rng      = seeded(seedStr);
   const phone    = `+91 ${PHONE_PFX[rInt(rng, 0, PHONE_PFX.length - 1)]}${rInt(rng, 100000, 999999)}`;
   const region   = REGIONS[rInt(rng, 0, REGIONS.length - 1)];
   const confidence = rInt(rng, 80, 96);
 
-  // Duration as mm:ss for player display
-  const [min, secPart] = call.duration.replace('m ', ':').replace('s', '').split(':');
-  const playerDuration = `${min}:${secPart.padStart(2, '0')}`;
+  // Duration as mm:ss for player display — guard against '—' or missing
+  let playerDuration = '0:00';
+  try {
+    const raw = (call.duration || '0m 0s').replace('m ', ':').replace('s', '');
+    const [min, secPart] = raw.split(':');
+    playerDuration = `${min}:${(secPart ?? '0').padStart(2, '0')}`;
+  } catch { playerDuration = '0:00'; }
 
   // Quality scores
   const overall    = rInt(rng, 75, 92);

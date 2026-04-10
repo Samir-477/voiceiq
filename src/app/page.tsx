@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect, useMemo } from 'react';
 import { Header } from '@/components/layout/header';
 import { LocationFilterBar } from '@/components/shared/location-filter-bar';
 import { KpiCard } from '@/components/dashboard/kpi-card';
@@ -12,94 +13,188 @@ import { CallIntentDistributionChart } from '@/components/dashboard/call-intent-
 import { TopMissedProductsChart } from '@/components/dashboard/top-missed-products-chart';
 import { StoresAttentionList } from '@/components/dashboard/stores-attention-list';
 import { ExecutiveSummaryBanner } from '@/components/dashboard/executive-summary-banner';
-import { useMemo } from 'react';
 import { calculateTrend } from '@/lib/trend-utils';
-import { mockOverviewData } from './mock-data';
+import type {
+  KpiSummaryResponse,
+  AudienceResponse,
+  VoiceQualityResponse,
+  IntentDistributionItem,
+  WeeklyVolumeKpiItem,
+  MissedProductItem,
+  RegionPerformanceItem,
+  StoreListItem,
+} from '@/types/api';
 import type { KpiMetric } from '@/types';
+import { toast } from 'sonner';
+
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+const API_KEY  = process.env.NEXT_PUBLIC_X_API_KEY  || '';
 
 export default function OverviewPage() {
-  const overview = mockOverviewData;
+  const [kpiSummary,      setKpiSummary]      = useState<KpiSummaryResponse | null>(null);
+  const [audience,        setAudience]        = useState<AudienceResponse | null>(null);
+  const [voiceQuality,    setVoiceQuality]    = useState<VoiceQualityResponse | null>(null);
+  const [intentDist,      setIntentDist]      = useState<IntentDistributionItem[]>([]);
+  const [weeklyData,      setWeeklyData]      = useState<WeeklyVolumeKpiItem[]>([]);
+  const [missedProducts,  setMissedProducts]  = useState<MissedProductItem[]>([]);
+  const [regionPerf,      setRegionPerf]      = useState<RegionPerformanceItem[]>([]);
+  const [storesAttention, setStoresAttention] = useState<StoreListItem[]>([]);
+  const [loading,         setLoading]         = useState(true);
+  const [error,           setError]           = useState<string | null>(null);
 
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const headers = {
+          'X-API-Key':    API_KEY,
+          'Content-Type': 'application/json',
+        };
+
+        // Fetch all 8 Executive KPI APIs in parallel
+        const [
+          summaryRes,
+          audienceRes,
+          voiceQualityRes,
+          intentRes,
+          weeklyRes,
+          missedRes,
+          regionRes,
+          attentionRes,
+        ] = await Promise.all([
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/summary`,             { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/audience`,            { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/voice-quality`,       { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/intent-distribution`, { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/weekly`,              { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/missed-products`,     { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/region`,              { headers }),
+          fetch(`${BASE_URL}/api/v1/analytics/kpi/stores-attention`,    { headers }),
+        ]);
+
+        if (
+          !summaryRes.ok     || !audienceRes.ok  || !voiceQualityRes.ok || !intentRes.ok ||
+          !weeklyRes.ok      || !missedRes.ok    || !regionRes.ok       || !attentionRes.ok
+        ) {
+          throw new Error('Failed to fetch executive analytics data');
+        }
+
+        const summaryData      = await summaryRes.json();
+        const audienceData     = await audienceRes.json();
+        const voiceQualityData = await voiceQualityRes.json();
+        const intentData       = await intentRes.json();
+        const weeklyRawData    = await weeklyRes.json();
+        const missedData       = await missedRes.json();
+        const regionData       = await regionRes.json();
+        const attentionData    = await attentionRes.json();
+
+        // API responses may be wrapped in an array — handle both cases
+        setKpiSummary(     Array.isArray(summaryData)      ? summaryData[0]      : summaryData);
+        setAudience(       Array.isArray(audienceData)     ? audienceData[0]     : audienceData);
+        setVoiceQuality(   Array.isArray(voiceQualityData) ? voiceQualityData[0] : voiceQualityData);
+        setIntentDist(     Array.isArray(intentData[0])    ? intentData[0]       : intentData);
+        setWeeklyData(     Array.isArray(weeklyRawData[0]) ? weeklyRawData[0]    : weeklyRawData);
+        setMissedProducts( Array.isArray(missedData[0])    ? missedData[0]       : missedData);
+        setRegionPerf(     Array.isArray(regionData[0])    ? regionData[0]       : regionData);
+        setStoresAttention(Array.isArray(attentionData[0]) ? attentionData[0]    : attentionData);
+
+      } catch (err: any) {
+        console.error('Executive KPI API Error:', err);
+        setError(err.message || 'An unexpected error occurred');
+        toast.error('Failed to load executive dashboard data');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  // Map kpiSummary → KpiMetric[] for KpiCard components
   const kpis = useMemo((): KpiMetric[] => {
-    if (!overview) return [];
+    if (!kpiSummary) return [];
 
     return [
-      // ── Row 1: 4 KPI cards ──────────────────────────────────────────────
+      // ── Row 1: 4 main KPI cards ──────────────────────────────────────────────
       {
-        id: 'total_calls',
+        id:    'total_calls',
         label: 'Total Calls',
-        value: (overview.total_calls || 0).toLocaleString(),
-        trend: calculateTrend(overview.total_calls_trend),
-        icon: 'phone-incoming',
+        value: (kpiSummary.total_calls || 0).toLocaleString(),
+        trend: calculateTrend(kpiSummary.total_calls_trend ?? []),
+        icon:  'phone-incoming',
         color: 'blue',
       },
       {
-        id: 'qualified_calls',
+        id:    'qualified_calls',
         label: 'Qualified Calls',
-        value: `${Math.round(((overview.answered_calls || 0) / Math.max(overview.total_calls || 1, 1)) * 100)}%`,
-        trend: calculateTrend(overview.answered_calls_trend),
-        icon: 'check-circle',
+        value: `${(kpiSummary.qualified_pct || 0).toFixed(1)}%`,
+        trend: calculateTrend(kpiSummary.qualified_trend ?? []),
+        icon:  'check-circle',
         color: 'green',
       },
       {
-        id: 'purchase_intent',
+        id:    'purchase_intent',
         label: 'Purchase Intent',
-        value: (overview.high_intent_inquiries || 0).toLocaleString(),
-        trend: calculateTrend(overview.high_intent_trend),
-        icon: 'crosshair',
+        value: (kpiSummary.high_intent_calls || 0).toLocaleString(),
+        trend: calculateTrend(kpiSummary.high_intent_trend ?? []),
+        icon:  'crosshair',
         color: 'orange',
       },
       {
-        id: 'junk_calls',
-        label: 'Junk Calls',
-        value: (overview.missed_calls || 0).toLocaleString(),
-        trend: calculateTrend(overview.missed_calls_trend),
-        icon: 'x-circle',
+        id:    'junk_calls',
+        label: 'Junk / Noise',
+        value: (kpiSummary.noise_calls || 0).toLocaleString(),
+        trend: calculateTrend(kpiSummary.noise_trend ?? []),
+        icon:  'x-circle',
         color: 'red',
       },
-      // ── Row 2: 5 compact stat cards ─────────────────────────────────────
+
+      // ── Row 2: 5 compact stat cards ─────────────────────────────────────────
       {
-        id: 'revenue_at_risk',
+        id:    'revenue_at_risk',
         label: 'Revenue at Risk',
         value: '₹4.3L',
         trend: 0,
-        icon: 'indian-rupee',
+        icon:  'indian-rupee',
         color: 'red',
       },
       {
-        id: 'complaint_rate',
+        id:    'complaint_rate',
         label: 'Complaint Rate',
-        value: '26%',
+        value: `${(kpiSummary.complaint_rate_pct || 0).toFixed(1)}%`,
         trend: 0,
-        icon: 'shield-alert',
+        icon:  'shield-alert',
         color: 'red',
       },
       {
-        id: 'conversion_rate',
+        id:    'conversion_rate',
         label: 'Conversion Rate',
-        value: `${overview.new_callers_percent || 0}%`,
+        value: `${(kpiSummary.conversion_rate_pct || 0).toFixed(1)}%`,
         trend: 0,
-        icon: 'trending-up',
+        icon:  'trending-up',
         color: 'orange',
       },
       {
-        id: 'stores_attention',
+        id:    'stores_attention',
         label: 'Stores Need Attention',
-        value: (overview.stockout_calls || 0).toLocaleString(),
+        value: storesAttention.length.toLocaleString(),
         trend: 0,
-        icon: 'store',
+        icon:  'store',
         color: 'red',
       },
       {
-        id: 'zero_call_stores',
+        id:    'zero_call_stores',
         label: 'Zero Call Stores',
-        value: '5',
+        value: '—',
         trend: 0,
-        icon: 'package-x',
+        icon:  'package-x',
         color: 'orange',
       },
     ];
-  }, [overview]);
+  }, [kpiSummary, storesAttention]);
 
   return (
     <div className="min-h-screen">
@@ -111,44 +206,59 @@ export default function OverviewPage() {
 
           {/* KPI Row 1 — 4 main cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {kpis.slice(0, 4).map((kpi) => (
-              <KpiCard key={kpi.id} metric={kpi} />
-            ))}
+            {loading && !kpiSummary
+              ? [...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm h-[110px] animate-pulse"
+                  />
+                ))
+              : kpis.slice(0, 4).map((kpi) => <KpiCard key={kpi.id} metric={kpi} />)}
           </div>
 
           {/* KPI Row 2 — 5 compact cards */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {kpis.slice(4).map((kpi) => (
-              <KpiCard key={kpi.id} metric={kpi} compact />
-            ))}
+            {loading && !kpiSummary
+              ? [...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm h-[90px] animate-pulse"
+                  />
+                ))
+              : kpis.slice(4).map((kpi) => <KpiCard key={kpi.id} metric={kpi} compact />)}
           </div>
 
-          <ExecutiveSummaryBanner />
+          <ExecutiveSummaryBanner
+            kpiSummary={kpiSummary}
+            missedProducts={missedProducts}
+            storesAttentionCount={storesAttention.length}
+            loading={loading}
+          />
 
           {/* Demographics & Quality Row */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-6">
-            <AudienceSplitCard />
-            <VoiceQualityCard />
-            <TopPersonasCard />
+            <AudienceSplitCard data={audience}     loading={loading} />
+            <VoiceQualityCard  data={voiceQuality} loading={loading} />
+            <TopPersonasCard   data={audience}     loading={loading} />
           </div>
 
           {/* Region Performance */}
-          <RegionPerformanceTable />
+          <RegionPerformanceTable data={regionPerf} loading={loading} />
 
           {/* Weekly Call Breakdown & Intent Distribution */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 lg:gap-6">
             <div className="lg:col-span-3">
-              <WeeklyCallBreakdownChart />
+              <WeeklyCallBreakdownChart data={weeklyData} loading={loading} />
             </div>
             <div className="lg:col-span-2">
-              <CallIntentDistributionChart />
+              <CallIntentDistributionChart data={intentDist} loading={loading} />
             </div>
           </div>
 
           {/* Products & Stores Alert */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
-            <TopMissedProductsChart />
-            <StoresAttentionList />
+            <TopMissedProductsChart data={missedProducts}  loading={loading} />
+            <StoresAttentionList    data={storesAttention} loading={loading} />
           </div>
         </div>
       </div>

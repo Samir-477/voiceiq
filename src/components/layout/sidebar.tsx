@@ -26,12 +26,12 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: '/', icon: LayoutDashboard, label: 'Executive Dashboard' },
-  { href: '/agent-performance', icon: Users, label: 'Agent Performance' },
-  { href: '/call-explorer', icon: Search, label: 'Call Explorer' },
-  { href: '/customer-experience', icon: Heart, label: 'Customer Experience' },
-  { href: '/store-performance', icon: Store, label: 'Store Performance' },
   { href: '/revenue', icon: IndianRupee, label: 'Revenue Intelligence' },
+  { href: '/agent-performance', icon: Users, label: 'Agent Performance' },
+  { href: '/store-performance', icon: Store, label: 'Store Performance' },
+  { href: '/customer-experience', icon: Heart, label: 'Customer Experience' },
   { href: '/operations', icon: BarChart2, label: 'Operations' },
+  { href: '/call-explorer', icon: Search, label: 'Call Explorer' },
   { href: '/reports', icon: FileText, label: 'Reports' },
 ];
 
