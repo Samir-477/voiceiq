@@ -149,3 +149,25 @@ export interface DashboardFilters {
   sentiment?: string;
   search?: string;
 }
+
+// --- Revenue Intelligence API Shapes ---
+
+export interface RevenueSummaryResponse {
+  missed_demand_calls: number;
+  stockout_calls: number;
+  top_missed_category: string;
+  category_breakdown: Record<string, number>;
+}
+
+export interface RevenueByRegionItem {
+  region: string;
+  missed_demand: number;
+  stockout_count: number;
+}
+
+export interface CategoryDemandConversionItem {
+  category: string;
+  total_calls: number;
+  conversions: number;
+  conversion_pct: number;
+}

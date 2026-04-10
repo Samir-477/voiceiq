@@ -4,12 +4,32 @@ import type { DemandedProduct } from '@/types';
 
 interface TopDemandedProductsProps {
   data: DemandedProduct[];
+  loading?: boolean;
 }
 
-export function TopDemandedProducts({ data }: TopDemandedProductsProps) {
+export function TopDemandedProducts({ data, loading }: TopDemandedProductsProps) {
+  if (loading || !data || data.length === 0) {
+    return (
+      <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm h-full animate-pulse flex flex-col">
+        <div className="h-6 w-48 bg-gray-100 rounded mb-6" />
+        <div className="flex-1 space-y-5">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="space-y-2">
+              <div className="flex justify-between">
+                <div className="h-4 w-32 bg-gray-100 rounded" />
+                <div className="h-3 w-16 bg-gray-50 rounded" />
+              </div>
+              <div className="h-2 w-full bg-gray-50 rounded-full" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-200 h-full flex flex-col">
-      <h3 className="text-base font-bold text-gray-900 mb-6">Top Demanded Products</h3>
+      <h3 className="text-base font-bold text-gray-900 mb-6">Top Demanded Categories</h3>
 
       <div className="flex flex-col gap-5 flex-1">
         {data.map((product) => (
