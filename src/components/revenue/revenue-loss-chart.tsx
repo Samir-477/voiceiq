@@ -19,13 +19,16 @@ interface RevenueLossChartProps {
   loading?: boolean;
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface TooltipEntry { name: string; value: number; color: string; }
+interface CustomTooltipProps { active?: boolean; payload?: TooltipEntry[]; label?: string; }
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border border-gray-100 rounded-xl shadow-lg px-4 py-3">
         <p className="text-sm font-bold text-gray-900 mb-2">{label} Region</p>
         <div className="space-y-1.5">
-          {payload.map((entry: any, i: number) => (
+          {payload.map((entry, i) => (
             <div key={i} className="flex items-center justify-between gap-4">
               <span className="text-xs font-medium text-gray-500">{entry.name}:</span>
               <span className="text-sm font-bold" style={{ color: entry.color }}>{entry.value}</span>

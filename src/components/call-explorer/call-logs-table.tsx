@@ -5,14 +5,6 @@ import { callLogsData } from '@/app/call-explorer/mock-data';
 import { useCallModal } from './call-modal';
 import type { CallLogItem } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const callLogsData = [
-//   { id: 'CALL-00001', store: 'Koramangala Flagship', agent: 'Agent 1', duration: '2m 56s',
-//     type: 'Complaint', persona: 'Budget Shoppers', category: "Men's Formal",
-//     sentiment: 'Negative', converted: '-' },
-//   ... more rows
-// ];
-
 interface CallLogsTableProps {
   data: CallLogItem[];
   total?: number;

@@ -5,14 +5,6 @@ import { sentimentTrendsData } from '@/app/customer-experience/mock-data';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import type { SentimentTrendItem } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const sentimentTrendsData = [
-//   { week: 'W1', Positive: 45, Neutral: 35, Negative: 20 },
-//   { week: 'W2', Positive: 48, Neutral: 32, Negative: 20 },
-//   { week: 'W3', Positive: 42, Neutral: 38, Negative: 20 },
-//   { week: 'W4', Positive: 50, Neutral: 32, Negative: 18 },
-// ];
-
 interface SentimentTrendsChartProps {
   data: SentimentTrendItem[];
   loading?: boolean;
@@ -44,12 +36,13 @@ export function SentimentTrendsChart({ data, loading }: SentimentTrendsChartProp
       }))
     : sentimentTrendsData;
 
-  const CustomTooltip = ({ active, payload, label }: any) => {
+  interface SentTipEntry { name: string; value: number; color: string; }
+  const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: SentTipEntry[]; label?: string }) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white p-3 border border-black/10 shadow-lg rounded-xl">
           <p className="font-bold text-gray-800 mb-2">{label}</p>
-          {payload.map((entry: any, index: number) => (
+          {payload.map((entry, index) => (
             <p key={`item-${index}`} className="text-sm font-bold mb-1" style={{ color: entry.color }}>
               {entry.name} % : <span className="font-black">{entry.value}</span>
             </p>

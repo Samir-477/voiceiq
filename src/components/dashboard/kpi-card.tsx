@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import {
   Phone, PhoneIncoming, PhoneMissed, ClipboardCheck, PackageX, Users,
@@ -73,8 +74,6 @@ export function KpiCard({ metric, compact = false }: KpiCardProps) {
       <h3 className={`font-bold text-gray-900 leading-tight mb-2 ${compact ? 'text-xl' : 'text-2xl'}`}>
         {metric.value}
       </h3>
-
-
 
       {/* Trend badge */}
       {!trendNeutral && (

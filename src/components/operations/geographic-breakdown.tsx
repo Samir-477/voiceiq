@@ -10,11 +10,6 @@ import {
 import { cn } from '@/lib/utils';
 import type { GeoStateRow, GeoCityRow, GeoStoreRow } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const mockGeographicBreakdown = [ { state, region, totalCalls, qualified, junk, complaints, stores } ... ]
-// const mockCityWiseBreakdown   = [ { city, state, totalCalls, qualified, junk, topDemand } ... ]
-// const mockStoreDetails        = [ { store, city, state, total, qualified, junk, conv, csat, status } ... ]
-
 type TabType = 'State Wise' | 'City Wise' | 'Store Details';
 
 const TH = 'px-4 py-3 font-bold text-xs text-gray-400 uppercase tracking-wider';

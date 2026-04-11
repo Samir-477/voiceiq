@@ -6,15 +6,6 @@ import { Target } from 'lucide-react';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import type { IntentSentimentItem } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const intentDistributionData = [
-//   { name: 'Buy sneakers',               value: 26, fill: '#3b82f6' },
-//   { name: 'Price inquiry',              value: 24, fill: '#22c55e' },
-//   { name: 'Return item',                value: 18, fill: '#f59e0b' },
-//   { name: 'Check availability',         value: 16, fill: '#a855f7' },
-//   { name: 'Complaint about delivery',   value: 16, fill: '#ef4444' },
-// ];
-
 const INTENT_COLORS = ['#3b82f6', '#22c55e', '#f59e0b', '#a855f7', '#ef4444', '#f97316', '#14b8a6'];
 
 interface IntentDistributionChartProps {
@@ -76,7 +67,7 @@ export function IntentDistributionChart({ data, loading }: IntentDistributionCha
               </Pie>
               <Tooltip
                 contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 20px rgba(0,0,0,0.08)', fontWeight: 'bold', fontSize: '12px' }}
-                formatter={(value: any, name: any) => [`${value} (${Math.round((value / grandTotal) * 100)}%)`, name]}
+                formatter={(value, name) => [`${value} (${Math.round((Number(value) / grandTotal) * 100)}%)`, name as string]}
               />
             </PieChart>
           </ResponsiveContainer>

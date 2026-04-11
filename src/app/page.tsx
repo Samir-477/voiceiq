@@ -41,12 +41,10 @@ export default function OverviewPage() {
   const [regionPerf,      setRegionPerf]      = useState<RegionPerformanceItem[]>([]);
   const [storesAttention, setStoresAttention] = useState<StoreListItem[]>([]);
   const [loading,         setLoading]         = useState(true);
-  const [error,           setError]           = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      setError(null);
 
       try {
         const headers = {
@@ -101,10 +99,9 @@ export default function OverviewPage() {
         setRegionPerf(     Array.isArray(regionData[0])    ? regionData[0]       : regionData);
         setStoresAttention(Array.isArray(attentionData[0]) ? attentionData[0]    : attentionData);
 
-      } catch (err: any) {
-        console.error('Executive KPI API Error:', err);
-        setError(err.message || 'An unexpected error occurred');
-        toast.error('Failed to load executive dashboard data');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'An unexpected error occurred';
+        toast.error(msg || 'Failed to load executive dashboard data');
       } finally {
         setLoading(false);
       }

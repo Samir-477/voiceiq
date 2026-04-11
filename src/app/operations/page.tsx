@@ -29,12 +29,10 @@ export default function OperationsPage() {
   const [geoState,      setGeoState]      = useState<GeoStateRow[]>([]);
   const [geoCity,       setGeoCity]       = useState<GeoCityRow[]>([]);
   const [loading,       setLoading]       = useState(true);
-  const [error,         setError]         = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      setError(null);
 
       try {
         const headers = {
@@ -75,10 +73,9 @@ export default function OperationsPage() {
         setGeoState(Array.isArray(geoStateData[0]) ? geoStateData[0] : geoStateData);
         setGeoCity(Array.isArray(geoCityData[0]) ? geoCityData[0] : geoCityData);
 
-      } catch (err: any) {
-        console.error('Operations API Error:', err);
-        setError(err.message || 'An unexpected error occurred');
-        toast.error('Failed to load operations data');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'An unexpected error occurred';
+        toast.error(msg || 'Failed to load operations data');
       } finally {
         setLoading(false);
       }

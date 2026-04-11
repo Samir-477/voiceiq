@@ -1,17 +1,10 @@
+import type React from 'react';
 import { cxKpis } from '@/app/customer-experience/mock-data';
 import { AlertTriangle, Heart, RefreshCcw, TrendingDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CxSummaryResponse } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const cxKpis = [
-//   { id: 'complaint-rate', label: 'Complaint Rate', value: '8.2%', ... },
-//   { id: 'resolution-rate', label: 'Resolution Rate', value: '91%', ... },
-//   { id: 'repeat-complaints', label: 'Repeat Complaints', value: '124', ... },
-//   { id: 'negative-sentiment', label: 'Negative Sentiment', value: '18%', ... },
-// ];
-
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
   'alert-triangle': AlertTriangle,
   'heart': Heart,
   'refresh-ccw': RefreshCcw,

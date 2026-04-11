@@ -52,18 +52,7 @@ export function Header({ title, subtitle }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-6">
-        {/* <div className="relative group hidden lg:block">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground/60 transition-colors group-focus-within:text-primary" />
-          <input
-            type="text"
-            placeholder="Search analytics..."
-            value={filters.search || ''}
-            onChange={(e) => setFilters({ search: e.target.value })}
-            className="h-11 w-72 rounded-2xl bg-secondary/30 border border-transparent pl-10 pr-4 text-sm
-              placeholder:text-muted-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/10
-              focus:bg-white focus:border-primary/20 transition-all duration-300 shadow-sm"
-          />
-        </div> */}
+
 
         {/* Live System indicator */}
         <div className="hidden md:flex flex-col items-end pr-2">

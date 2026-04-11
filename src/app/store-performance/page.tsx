@@ -27,12 +27,10 @@ export default function StorePerformancePage() {
   const [conversionDrivers, setConversionDrivers] = useState<ConversionDriverItem[]>([]);
   const [personaBreakdown, setPersonaBreakdown] = useState<PersonaBreakdownItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      setError(null);
 
       try {
         const headers = {
@@ -63,10 +61,9 @@ export default function StorePerformancePage() {
         setConversionDrivers(Array.isArray(driversData[0]) ? driversData[0] : driversData);
         setPersonaBreakdown(Array.isArray(personaData[0]) ? personaData[0] : personaData);
 
-      } catch (err: any) {
-        console.error('Store Performance API Error:', err);
-        setError(err.message || 'An unexpected error occurred');
-        toast.error('Failed to load store performance data');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'An unexpected error occurred';
+        toast.error(msg || 'Failed to load store performance data');
       } finally {
         setLoading(false);
       }

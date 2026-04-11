@@ -76,9 +76,9 @@ export function CallIntentDistributionChart({ data, loading }: CallIntentDistrib
                 <Tooltip
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}
                   itemStyle={{ color: '#1f2937', fontWeight: 600 }}
-                  formatter={(value: any, name: any, props: any) =>
-                    [`${value} calls (${props.payload.percent}%)`, name]
-                  }
+                formatter={(value, name, props) =>
+                  [`${value} calls (${(props as { payload: { percent: number } }).payload.percent}%)`, name as string]
+                }
                 />
               </PieChart>
             </ResponsiveContainer>

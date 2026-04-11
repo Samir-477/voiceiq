@@ -41,10 +41,6 @@ export const cxKpis = [
   },
 ];
 
-export const audienceSplitData = [
-  { name: 'Female', value: 56, fill: '#3b82f6' },
-  { name: 'Male', value: 44, fill: '#ef4444' },
-];
 
 export const voiceQualityData = [
   { name: 'Tone', value: 77 },

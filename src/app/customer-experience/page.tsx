@@ -27,12 +27,10 @@ export default function CustomerExperiencePage() {
   const [complaintCats,  setComplaintCats]  = useState<ComplaintCategoryItem[]>([]);
   const [personaConv,    setPersonaConv]    = useState<PersonaConversionItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error,   setError]   = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      setError(null);
 
       try {
         const headers = {
@@ -63,10 +61,9 @@ export default function CustomerExperiencePage() {
         setComplaintCats(Array.isArray(complaintData[0]) ? complaintData[0] : complaintData);
         setPersonaConv(Array.isArray(personaData[0]) ? personaData[0] : personaData);
 
-      } catch (err: any) {
-        console.error('CX API Error:', err);
-        setError(err.message || 'An unexpected error occurred');
-        toast.error('Failed to load customer experience data');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'An unexpected error occurred';
+        toast.error(msg || 'Failed to load customer experience data');
       } finally {
         setLoading(false);
       }

@@ -36,9 +36,6 @@ export function StoreDetailsTable({ data, loading }: StoreDetailsTableProps) {
     ? data.map(toStoreRow)
     : mockStoreDetails;
 
-  // --- MOCK DATA (remove after API verified) ---
-  // const rows: StoreRow[] = mockStoreDetails;
-
   return (
     <>
       <div className="bg-white rounded-2xl border border-black/5 shadow-sm p-6 mb-6">

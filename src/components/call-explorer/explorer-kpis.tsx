@@ -1,19 +1,10 @@
+import type React from 'react';
 import { explorerKpis } from '@/app/call-explorer/mock-data';
 import { Phone, CheckCircle, XCircle, Clock, ShoppingCart } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CallExplorerSummary } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const explorerKpis = [
-//   { id: 'total-calls',       label: 'Total Calls',       value: '50',    subLabel: 'Filtered results', icon: 'phone' },
-//   { id: 'qualified',         label: 'Qualified',          value: '23',    subLabel: '46%',              icon: 'check-circle' },
-//   { id: 'junk',              label: 'Junk',               value: '14',    subLabel: '28%',              icon: 'x-circle' },
-//   { id: 'avg-duration',      label: 'Avg Duration',       value: '3m 17s',subLabel: 'Per call',         icon: 'clock' },
-//   { id: 'purchase-intent',   label: 'Purchase Intent',    value: '50%',   subLabel: '25 calls',         icon: 'shopping-cart' },
-//   { id: 'avg-ai-confidence', label: 'Avg AI Confidence',  value: '84%',   subLabel: 'Classification',   icon: 'check-circle' },
-// ];
-
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number }>> = {
   'phone':         Phone,
   'check-circle':  CheckCircle,
   'x-circle':      XCircle,
@@ -111,7 +102,7 @@ export function ExplorerKpis({ data, loading }: ExplorerKpisProps) {
 
             <div>
               <p className="text-2xl font-bold text-gray-900 leading-none mb-1">{kpi.value}</p>
-              <p className={cn('text-xs font-bold mt-1.5', (kpi as any).subLabelColor || 'text-gray-400')}>
+              <p className={cn('text-xs font-bold mt-1.5', (kpi as { subLabelColor?: string }).subLabelColor || 'text-gray-400')}>
                 {kpi.subLabel}
               </p>
             </div>

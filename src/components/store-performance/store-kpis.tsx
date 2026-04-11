@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { mockStoreKpis } from '@/app/store-performance/mock-data';
 import { Store, PhoneOff, Phone, TrendingUp, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -8,7 +9,7 @@ interface KpiProps {
   label: string;
   value: string;
   subtitle: string;
-  icon: any;
+  icon: React.ComponentType<{ size?: number }>;
   trendUp?: boolean;
 }
 

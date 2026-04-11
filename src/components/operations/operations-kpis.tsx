@@ -1,29 +1,16 @@
 'use client';
 
+import type React from 'react';
 import { mockOperationsKpis } from '@/app/operations/mock-data';
 import { Phone, CheckCircle, XCircle, Clock, TrendingDown, AlertTriangle, Calendar, Sun, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { OpsSummaryResponse } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const mockOperationsKpis = {
-//   totalCalls:     { value: '14,700', trend: '+8.2% vs yesterday', trendUp: true },
-//   qualifiedCalls: { value: '5,490',  subtitle: '37.3% of total',  trendUp: true },
-//   junkCalls:      { value: '1,695',  subtitle: '11.5% of total',  trendUp: false },
-//   avgDuration:    { value: '3m 42s', trend: '-12s vs last week',  trendUp: true },
-//   disconnectRate: { value: '4.2%',   trend: '+0.3%',              trendUp: false },
-//   flaggedIssues:  { value: '12',     subtitle: '5 high priority', trendUp: false },
-//   weekdayCalls:   { value: '2,140',  subtitle: 'Mon-Fri average' },
-//   weekendCalls:   { value: '2,000',  subtitle: 'Sat 2,800 • Sun 1,200' },
-//   peakHour:       { value: '11 AM - 1 PM', subtitle: '38% of daily volume' },
-//   repeatCallers:  { value: '1,240',  subtitle: '8.4% of total calls' },
-// };
-
 interface KpiProps {
   label: string;
   value: string;
   subLabel: string;
-  icon: any;
+  icon: React.ComponentType<{ size?: number }>;
   trendUp?: boolean;
 }
 

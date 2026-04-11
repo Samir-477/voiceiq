@@ -39,7 +39,7 @@ export function VoiceQualityChart() {
             
             {/* Actual data bar overlaid entirely */}
             <Bar dataKey="value" fill="#ef4444" radius={[0, 4, 4, 0]}>
-              <LabelList dataKey="value" position="right" formatter={(val: any) => `${val}%`} fill="#f59e0b" fontSize={12} fontWeight={700} />
+              <LabelList dataKey="value" position="right" formatter={(val: string | number | boolean | null | undefined) => `${val ?? ''}%`} fill="#f59e0b" fontSize={12} fontWeight={700} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

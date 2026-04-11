@@ -24,12 +24,10 @@ export default function CallExplorerPage() {
   const [callLogs,        setCallLogs]        = useState<CallLogItem[]>([]);
   const [totalCalls,      setTotalCalls]      = useState(0);
   const [loading,         setLoading]         = useState(true);
-  const [error,           setError]           = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      setError(null);
 
       try {
         const headers = {
@@ -71,10 +69,9 @@ export default function CallExplorerPage() {
           setTotalCalls(arr.length);
         }
 
-      } catch (err: any) {
-        console.error('Call Explorer API Error:', err);
-        setError(err.message || 'An unexpected error occurred');
-        toast.error('Failed to load call explorer data');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'An unexpected error occurred';
+        toast.error(msg || 'Failed to load call explorer data');
       } finally {
         setLoading(false);
       }

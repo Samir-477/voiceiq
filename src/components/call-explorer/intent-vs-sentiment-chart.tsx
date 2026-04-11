@@ -6,15 +6,6 @@ import { Activity } from 'lucide-react';
 import { useIsMounted } from '@/hooks/use-is-mounted';
 import type { IntentSentimentItem } from '@/types/api';
 
-// --- MOCK DATA (remove after API verified) ---
-// const intentVsSentimentData = [
-//   { name: 'Buy sneakers',               positive: 18, neutral: 5,  negative: 3  },
-//   { name: 'Price inquiry',              positive: 15, neutral: 6,  negative: 3  },
-//   { name: 'Return item',                positive: 4,  neutral: 2,  negative: 12 },
-//   { name: 'Complaint about delivery',   positive: 0,  neutral: 2,  negative: 14 },
-//   { name: 'Check availability',         positive: 10, neutral: 4,  negative: 2  },
-// ];
-
 interface IntentVsSentimentChartProps {
   data: IntentSentimentItem[];
   loading?: boolean;

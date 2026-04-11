@@ -23,13 +23,11 @@ export default function RevenueIntelligencePage() {
   const [regionData, setRegionData] = useState<RevenueByRegionItem[]>([]);
   const [categoryData, setCategoryData] = useState<CategoryDemandConversionItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
-      setError(null);
-      
+
       try {
         const headers = {
           'X-API-Key': API_KEY,
@@ -56,10 +54,9 @@ export default function RevenueIntelligencePage() {
         setRegionData(Array.isArray(regionListData[0]) ? regionListData[0] : regionListData);
         setCategoryData(Array.isArray(categoryListData[0]) ? categoryListData[0] : categoryListData);
         
-      } catch (err: any) {
-        console.error('Revenue API Error:', err);
-        setError(err.message || 'An unexpected error occurred');
-        toast.error('Failed to load revenue data');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'An unexpected error occurred';
+        toast.error(msg || 'Failed to load revenue data');
       } finally {
         setLoading(false);
       }
