@@ -1,0 +1,1305 @@
+{
+  "info": {
+    "_postman_id": "1ab3ab58-96ad-4949-bfae-686c76b99e52",
+    "name": "Bata Analytics Dashboard APIs",
+    "description": "All 27 dashboard analytics endpoints under /api/v1/analytics/. Join across bata_master_trigger + bata_insights_v2 via bata_master_trigger.callUuid = bata_insights_v2.call_uuid.\n\n**Common filter params (all optional):**\n- `start_date` / `end_date` — YYYY-MM-DD (default: last 90 days)\n- `gmbStoreCode` — e.g. 3625\n- `state` — e.g. Delhi\n- `city` — e.g. Chennai\n- `area` — area name\n- `store` — businessName e.g. \"Bata Shoe Store\"\n- `businessId` — numeric businessId\n- `intent` — e.g. Complaint, Stock Availability\n- `sentiment` — Positive | Neutral | Negative",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "35399501"
+  },
+  "item": [
+    {
+      "name": "KPI / Executive",
+      "item": [
+        {
+          "name": "KPI Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/summary?start_date=2026-02-01&end_date=2026-04-08",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "2026-02-01",
+                  "description": "Start date YYYY-MM-DD"
+                },
+                {
+                  "key": "end_date",
+                  "value": "2026-04-08",
+                  "description": "End date YYYY-MM-DD"
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "city",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gmbStoreCode",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "intent",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "8 KPI cards: total_calls, qualified, noise, high_intent, conversions, complaints, avg_score, avg_talk_time, sentiment_breakdown."
+          },
+          "response": []
+        },
+        {
+          "name": "Audience Split + Top Personas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/audience",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "audience"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "end_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Audience split (Male/Female/Kids) for pie chart + top 10 customer personas with conversion %."
+          },
+          "response": []
+        },
+        {
+          "name": "Voice Quality Scores",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/voice-quality",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "voice-quality"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gmbStoreCode",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Average of 5 performance_metrics: tone, efficiency, problem_solving, professionalism, brand_representation. Use for radar chart."
+          },
+          "response": []
+        },
+        {
+          "name": "Intent Distribution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/intent-distribution",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "intent-distribution"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Count and % for each call_intent. Includes NOISE. Use for donut chart."
+          },
+          "response": []
+        },
+        {
+          "name": "Weekly Volume (Day of Week)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/weekly",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "weekly"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Qualified vs NOISE per day-of-week (Mon–Sun). Use for grouped bar chart."
+          },
+          "response": []
+        },
+        {
+          "name": "Missed Products / Stockouts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/missed-products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "missed-products"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Top 15 missed articles derived from is_missed_opportunity=true records, with stockout count."
+          },
+          "response": []
+        },
+        {
+          "name": "Region Performance",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/region",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "region"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "North/South/East/West breakdown: total, qualified %, conversion %, complaints, missed opps, store count."
+          },
+          "response": []
+        },
+        {
+          "name": "Stores Needing Attention",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/kpi/stores-attention",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "kpi",
+                "stores-attention"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Stores where conversion < 30% OR CSAT < 75%. Returns same schema as /store/list."
+          },
+          "response": []
+        }
+      ],
+      "description": "Summary KPI cards and charts powering the Executive Dashboard page."
+    },
+    {
+      "name": "Revenue Intelligence",
+      "item": [
+        {
+          "name": "Revenue Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/revenue/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "revenue",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Missed demand count, stockout count, top missed category, full category breakdown dict."
+          },
+          "response": [{
+    "missed_demand_calls": 210,
+    "stockout_calls": 68,
+    "top_missed_category": "School Shoes",
+    "category_breakdown": {
+        "School Shoes": 23,
+        "Women's Casual": 13,
+        "Others": 10,
+        "Sneakers": 12,
+        "Comfort Range": 8,
+        "Men's Formal": 20,
+        "Accessories": 5
+    }
+}]
+        },
+        {
+          "name": "Revenue by Region",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/revenue/by-region",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "revenue",
+                "by-region"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Missed demand and stockout count per region. Use for bar chart."
+          },
+          "response": [[
+    {
+        "region": "South",
+        "missed_demand": 121,
+        "stockout_count": 45
+    },
+    {
+        "region": "North",
+        "missed_demand": 36,
+        "stockout_count": 11
+    },
+    {
+        "region": "East",
+        "missed_demand": 27,
+        "stockout_count": 7
+    },
+    {
+        "region": "West",
+        "missed_demand": 26,
+        "stockout_count": 5
+    }
+]]
+        },
+        {
+          "name": "Category Demand vs Conversion",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/revenue/category-demand",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "revenue",
+                "category-demand"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Product categories: total calls, conversions, conversion %. Use as grouped bar chart."
+          },
+          "response": [[
+    {
+        "category": "School Shoes",
+        "total_calls": 50,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Men's Formal",
+        "total_calls": 50,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Others",
+        "total_calls": 34,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Women's Casual",
+        "total_calls": 27,
+        "conversions": 1,
+        "conversion_pct": 3.7
+    },
+    {
+        "category": "Sneakers",
+        "total_calls": 20,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Accessories",
+        "total_calls": 19,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Comfort Range",
+        "total_calls": 12,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Women's Formal",
+        "total_calls": 1,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    },
+    {
+        "category": "Men's Casual",
+        "total_calls": 1,
+        "conversions": 0,
+        "conversion_pct": 0.0
+    }
+]]
+        }
+      ],
+      "description": "Revenue loss, missed demand, and product category demand endpoints."
+    },
+    {
+      "name": "Store Performance",
+      "item": [
+        {
+          "name": "Store List (All Stores)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/store/list",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "store",
+                "list"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "Tamil Nadu",
+                  "disabled": true
+                },
+                {
+                  "key": "city",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Full store table with store_code, store_name, state, city, region, calls, conversion %, CSAT %, avg score, handle time, status (Active / Needs Attention)."
+          },
+          "response": []
+        },
+        {
+          "name": "Store Leaderboard (Top N)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/store/leaderboard?top_n=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "store",
+                "leaderboard"
+              ],
+              "query": [
+                {
+                  "key": "top_n",
+                  "value": "10",
+                  "description": "Number of stores to return (max 50)"
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Top N stores ranked by conversions. Same schema as /store/list."
+          },
+          "response": []
+        },
+        {
+          "name": "Conversion Drivers (Scoring Audit Delta)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/store/conversion-drivers",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "store",
+                "conversion-drivers"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Each scoring_audit dimension (greeting, empathy, accuracy, sales_proactiveness...) with avg score on converted vs non-converted calls and delta. Use for horizontal bar / waterfall chart."
+          },
+          "response": []
+        },
+        {
+          "name": "Persona Breakdown",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/store/persona-breakdown",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "store",
+                "persona-breakdown"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Customer personas with call count and conversion rate. Use for grouped bar chart."
+          },
+          "response": []
+        }
+      ],
+      "description": "Store-level analytics: leaderboard, conversion drivers, persona breakdown."
+    },
+    {
+      "name": "Customer Experience",
+      "item": [
+        {
+          "name": "CX Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/cx/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "cx",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "CX KPI cards: complaint rate %, resolution rate %, negative sentiment %."
+          },
+          "response": []
+        },
+        {
+          "name": "Sentiment Trend (Weekly)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/cx/sentiment-trend",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "cx",
+                "sentiment-trend"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Weekly sentiment breakdown: Positive/Neutral/Negative counts + % per week_start date. Use for line chart."
+          },
+          "response": []
+        },
+        {
+          "name": "Complaint Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/cx/complaint-categories",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "cx",
+                "complaint-categories"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Complaint sub-categories (Delivery/Product Quality/Staff Behavior/Wrong Item/Refund-Return/Billing/Other) classified from short_summary keywords. Filtered to intent=Complaint automatically."
+          },
+          "response": []
+        },
+        {
+          "name": "Persona → Conversion (CX View)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/cx/persona-conversion",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "cx",
+                "persona-conversion"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Same data as /store/persona-breakdown but shown in the CX page context."
+          },
+          "response": []
+        }
+      ],
+      "description": "CX metrics: complaint rate, resolution, sentiment trend, complaint categories."
+    },
+    {
+      "name": "Operations",
+      "item": [
+        {
+          "name": "Ops Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/ops/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "ops",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Ops KPI cards: total, qualified, junk %, flagged issues, weekday avg, weekend avg, peak_hour."
+          },
+          "response": []
+        },
+        {
+          "name": "Weekly Volume (Ops)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/ops/weekly-volume",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "ops",
+                "weekly-volume"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Qualified vs NOISE per day-of-week. Same data as /kpi/weekly — presented in Ops page."
+          },
+          "response": []
+        },
+        {
+          "name": "Volume by Region",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/ops/by-region",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "ops",
+                "by-region"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Call volume count + % per region (North/South/East/West). Use for donut chart."
+          },
+          "response": []
+        },
+        {
+          "name": "Geo Breakdown — Store View",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/ops/geo-breakdown?tab=store",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "ops",
+                "geo-breakdown"
+              ],
+              "query": [
+                {
+                  "key": "tab",
+                  "value": "store",
+                  "description": "store | state | city"
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Geographic breakdown table grouped by store. Use ?tab=store|state|city for the tab switcher widget."
+          },
+          "response": []
+        },
+        {
+          "name": "Geo Breakdown — State View",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/ops/geo-breakdown?tab=state",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "ops",
+                "geo-breakdown"
+              ],
+              "query": [
+                {
+                  "key": "tab",
+                  "value": "state"
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Geo Breakdown — City View",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/ops/geo-breakdown?tab=city",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "ops",
+                "geo-breakdown"
+              ],
+              "query": [
+                {
+                  "key": "tab",
+                  "value": "city"
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Operational metrics: call volume, regional distribution, geo breakdown."
+    },
+    {
+      "name": "Call Explorer",
+      "item": [
+        {
+          "name": "Call Explorer Summary Cards",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/calls/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "calls",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "intent",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "KPI header cards for the call explorer: total, qualified %, junk %, purchase_intent %, avg AI confidence %."
+          },
+          "response": []
+        },
+        {
+          "name": "Intent × Sentiment Stacked Bar",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/calls/intent-sentiment",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "calls",
+                "intent-sentiment"
+              ],
+              "query": [
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Positive/Neutral/Negative count per call_intent. Use for stacked bar chart. NOISE excluded."
+          },
+          "response": []
+        },
+        {
+          "name": "Call List (Paginated)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/calls?page=1&per_page=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "calls"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "per_page",
+                  "value": "20",
+                  "description": "Max 100"
+                },
+                {
+                  "key": "start_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "end_date",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "state",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "city",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "gmbStoreCode",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "intent",
+                  "value": "Complaint",
+                  "disabled": true
+                },
+                {
+                  "key": "sentiment",
+                  "value": "Negative",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Paginated call log. Returns page, per_page, total, total_pages, results[]. Each result has full store metadata (from bata_master_trigger) + AI fields (from bata_insights_v2)."
+          },
+          "response": []
+        },
+        {
+          "name": "Call Detail (by UUID)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/analytics/calls/22a9573a-9258-42d2-80e7-0046eddd979b",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "analytics",
+                "calls",
+                "22a9573a-9258-42d2-80e7-0046eddd979b"
+              ]
+            },
+            "description": "Full call detail: store info, agent, recording_url, transcript, call_intent, score, sentiment, summary, full_analysis (complete JSON blob)."
+          },
+          "response": []
+        }
+      ],
+      "description": "Paginated call log, per-call details, and intent-sentiment analysis."
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-API-Key",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "{{api_key}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8001",
+      "description": "Change to your production URL e.g. https://api.yourdomain.com"
+    },
+    {
+      "key": "api_key",
+      "value": "my-secret-key-123"
+    }
+  ]
+}

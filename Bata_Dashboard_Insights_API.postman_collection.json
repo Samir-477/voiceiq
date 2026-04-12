@@ -1,0 +1,1188 @@
+{
+    "info": {
+        "_postman_id": "e92a1a2b-e4b6-47d2-a04e-9e4f7bbf56d4",
+        "name": "Bata Call Analytics Insights API",
+        "description": "API collection for the Bata Call Analytics Dashboard. All endpoints pull directly from the PostgreSQL bata_master and bata_insights tables.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "_exporter_id": "35399501"
+    },
+    "item": [
+        {
+            "name": "Filters",
+            "item": [
+                {
+                    "name": "Get Filter Options",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{base_url}}/api/v1/insights/filters",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "api",
+                                "v1",
+                                "insights",
+                                "filters"
+                            ]
+                        },
+                        "description": "Returns distinct Regions (State/City/Area) and Stores (Business ID, Name, GMB Code) to populate global dropdowns."
+                    },
+                    "response": [
+                        {
+                            "regions": [
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "West Mambalam"
+                                },
+                                {
+                                    "stateName": "Andhra Pradesh",
+                                    "cityName": "Ongole",
+                                    "areaName": "Pandaripuram"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Chromepet"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Arekere"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Vijayanagar"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Thiruvanmiyur"
+                                },
+                                {
+                                    "stateName": "Delhi",
+                                    "cityName": "South West Delhi",
+                                    "areaName": "Sarojini Nagar"
+                                },
+                                {
+                                    "stateName": "Telangana",
+                                    "cityName": "Hyderabad",
+                                    "areaName": "Hyderabad"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Thane",
+                                    "areaName": "Laxmi Nagar"
+                                },
+                                {
+                                    "stateName": "Andhra Pradesh",
+                                    "cityName": "Visakhapatnam",
+                                    "areaName": "Dwaraka Nagar"
+                                },
+                                {
+                                    "stateName": "Gujarat",
+                                    "cityName": "Vadodara",
+                                    "areaName": "Anandpura"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Yelahanka New Town"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Nagpur",
+                                    "areaName": "Untkhana"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "North 24 Parganas",
+                                    "areaName": "Halisahar"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Sahid Nagar Colony"
+                                },
+                                {
+                                    "stateName": "Goa",
+                                    "cityName": "Panaji",
+                                    "areaName": "Altinho"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Pallavaram"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Gariahat"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "K. K. Nagar"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Nagpur",
+                                    "areaName": "Sitabuldi"
+                                },
+                                {
+                                    "stateName": "Kerala",
+                                    "cityName": "Thiruvananthapuram",
+                                    "areaName": "Kochuveli"
+                                },
+                                {
+                                    "stateName": "Odisha",
+                                    "cityName": "Khordha",
+                                    "areaName": "Rasulgarh"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Medavakkam"
+                                },
+                                {
+                                    "stateName": "Andhra Pradesh",
+                                    "cityName": "Krishna",
+                                    "areaName": "Suryaraopet"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Mumbai",
+                                    "areaName": "Mahim West"
+                                },
+                                {
+                                    "stateName": "Uttar Pradesh",
+                                    "cityName": "Ghaziabad",
+                                    "areaName": "Raj Nagar Extension"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Rajarajeshwari Nagar"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Keelkattalai"
+                                },
+                                {
+                                    "stateName": "Uttarakhand",
+                                    "cityName": "Dehradun",
+                                    "areaName": "Shakti Colony"
+                                },
+                                {
+                                    "stateName": "Gujarat",
+                                    "cityName": "Vadodara",
+                                    "areaName": "Subhanpura"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Raja Bazar"
+                                },
+                                {
+                                    "stateName": "Delhi",
+                                    "cityName": "West Delhi",
+                                    "areaName": "Tilak Nagar"
+                                },
+                                {
+                                    "stateName": "Delhi",
+                                    "cityName": "East Delhi",
+                                    "areaName": "Preet Vihar"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Coimbatore",
+                                    "areaName": "Coimbatore"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Perungudi"
+                                },
+                                {
+                                    "stateName": "Punjab",
+                                    "cityName": "Sahibzada Ajit Singh Nagar",
+                                    "areaName": "Sas Nagar"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Velachery"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "West Tambaram"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Mumbai",
+                                    "areaName": "Malad West"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Vadapalani"
+                                },
+                                {
+                                    "stateName": "Andhra Pradesh",
+                                    "cityName": "Nellore",
+                                    "areaName": "Ramesh Reddy Nagar"
+                                },
+                                {
+                                    "stateName": "Assam",
+                                    "cityName": "Nagaon",
+                                    "areaName": "Kenyapatty"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Sahakar Nagar"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Whitefield"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Konanakunte"
+                                },
+                                {
+                                    "stateName": "Delhi",
+                                    "cityName": "North West Delhi",
+                                    "areaName": "Rohini"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Baghbazar"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Pimpri-Chinchwad",
+                                    "areaName": "Wakad"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Iyyappanthangal"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Saligramam"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Ballygunge"
+                                },
+                                {
+                                    "stateName": "Madhya Pradesh",
+                                    "cityName": "Satna",
+                                    "areaName": "MP Nagar"
+                                },
+                                {
+                                    "stateName": "Kerala",
+                                    "cityName": "Ernakulam",
+                                    "areaName": "Maradu"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Mumbai",
+                                    "areaName": "Saki Naka"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Hassan",
+                                    "areaName": "Hassan"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Thane",
+                                    "areaName": "Gaothan"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Basaveshwar Nagar"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Nanded",
+                                    "areaName": "Vazirabad"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Adambakkam"
+                                },
+                                {
+                                    "stateName": "Bihar",
+                                    "cityName": "Purnia",
+                                    "areaName": "Line Bazar"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Basavanagudi"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Mumbai",
+                                    "areaName": "Ghatkopar West"
+                                },
+                                {
+                                    "stateName": "Uttarakhand",
+                                    "cityName": "Dehradun",
+                                    "areaName": "Mohkampur"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Kankurgachi"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Ashok Nagar"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "T. Nagar"
+                                },
+                                {
+                                    "stateName": "Uttarakhand",
+                                    "cityName": "Dehradun",
+                                    "areaName": "Jakhan"
+                                },
+                                {
+                                    "stateName": "Telangana",
+                                    "cityName": "Hyderabad",
+                                    "areaName": "Whitefields"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Rajakilpakkam"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Latur",
+                                    "areaName": "Sawe Wadi"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Kankaria Estates"
+                                },
+                                {
+                                    "stateName": "Tripura",
+                                    "cityName": "West Tripura",
+                                    "areaName": "Melarmath"
+                                },
+                                {
+                                    "stateName": "Gujarat",
+                                    "cityName": "Surat",
+                                    "areaName": "Adajan"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Dharmatala"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Tambaram"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "HSR Layout"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Jayanagar"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Devasandra Industrial Estate"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "T. nagar"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "R T Nagar"
+                                },
+                                {
+                                    "stateName": "Delhi",
+                                    "cityName": "Central Delhi",
+                                    "areaName": "Connaught Place"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Triplicane"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Shivaji Nagar"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Mumbai",
+                                    "areaName": "Bhudargarh Colony"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Kolkata",
+                                    "areaName": "Laxmi Narayan Colony"
+                                },
+                                {
+                                    "stateName": "Andhra Pradesh",
+                                    "cityName": "Vijayawada",
+                                    "areaName": "Benz Circle"
+                                },
+                                {
+                                    "stateName": "Rajasthan",
+                                    "cityName": "Jodhpur",
+                                    "areaName": "Circular road"
+                                },
+                                {
+                                    "stateName": "Andhra Pradesh",
+                                    "cityName": "Visakhapatnam",
+                                    "areaName": "Jagadamba Junction"
+                                },
+                                {
+                                    "stateName": "Chandigarh",
+                                    "cityName": "Chandigarh",
+                                    "areaName": "Sector 19"
+                                },
+                                {
+                                    "stateName": "Telangana",
+                                    "cityName": "Hyderabad",
+                                    "areaName": "L. B. Nagar"
+                                },
+                                {
+                                    "stateName": "Telangana",
+                                    "cityName": "Hyderabad",
+                                    "areaName": "Nizampet"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Paschim Medinipur",
+                                    "areaName": "Keranitola"
+                                },
+                                {
+                                    "stateName": "Gujarat",
+                                    "cityName": "Surat",
+                                    "areaName": "Vesu"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Tumakuru",
+                                    "areaName": "Tumkur"
+                                },
+                                {
+                                    "stateName": "Maharashtra",
+                                    "cityName": "Mumbai",
+                                    "areaName": "Powai"
+                                },
+                                {
+                                    "stateName": "Punjab",
+                                    "cityName": "Phagwara",
+                                    "areaName": "Phagwara"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Chennai",
+                                    "areaName": "Porur"
+                                },
+                                {
+                                    "stateName": "Uttar Pradesh",
+                                    "cityName": "Lucknow",
+                                    "areaName": "Hariharpur"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Krishnarajapuram"
+                                },
+                                {
+                                    "stateName": "Telangana",
+                                    "cityName": "Hyderabad",
+                                    "areaName": "Gowliguda"
+                                },
+                                {
+                                    "stateName": "Tamil Nadu",
+                                    "cityName": "Vellore",
+                                    "areaName": "Thottapalayam"
+                                },
+                                {
+                                    "stateName": "Karnataka",
+                                    "cityName": "Bengaluru",
+                                    "areaName": "Indiranagar"
+                                },
+                                {
+                                    "stateName": "Delhi",
+                                    "cityName": "South Delhi",
+                                    "areaName": "South Extension II"
+                                },
+                                {
+                                    "stateName": "Uttar Pradesh",
+                                    "cityName": "Jaunpur",
+                                    "areaName": "Olandganj"
+                                },
+                                {
+                                    "stateName": "West Bengal",
+                                    "cityName": "Murshidabad",
+                                    "areaName": "Khagra"
+                                },
+                                {
+                                    "stateName": "Punjab",
+                                    "cityName": "Sahibzada Ajit Singh Nagar",
+                                    "areaName": "Sahibzada Ajit Singh Nagar"
+                                },
+                                {
+                                    "stateName": "Punjab",
+                                    "cityName": "Amritsar",
+                                    "areaName": "Ina Colony"
+                                },
+                                {
+                                    "stateName": "Madhya Pradesh",
+                                    "cityName": "Indore",
+                                    "areaName": "Khajrana"
+                                }
+                            ],
+                            "stores": [
+                                {
+                                    "businessId": 11417537,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2403"
+                                },
+                                {
+                                    "businessId": 11362014,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2391"
+                                },
+                                {
+                                    "businessId": 11949098,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1064"
+                                },
+                                {
+                                    "businessId": 11370853,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7519"
+                                },
+                                {
+                                    "businessId": 11455048,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7698"
+                                },
+                                {
+                                    "businessId": 11361747,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1078"
+                                },
+                                {
+                                    "businessId": 11454968,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2958"
+                                },
+                                {
+                                    "businessId": 11361494,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1708"
+                                },
+                                {
+                                    "businessId": 11815183,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9542"
+                                },
+                                {
+                                    "businessId": 11361502,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7580"
+                                },
+                                {
+                                    "businessId": 11361393,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3037"
+                                },
+                                {
+                                    "businessId": 11417319,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3003"
+                                },
+                                {
+                                    "businessId": 11361065,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9117"
+                                },
+                                {
+                                    "businessId": 11417285,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9451"
+                                },
+                                {
+                                    "businessId": 11417620,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2961"
+                                },
+                                {
+                                    "businessId": 11605767,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2991"
+                                },
+                                {
+                                    "businessId": 11362011,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1689"
+                                },
+                                {
+                                    "businessId": 11612556,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2987"
+                                },
+                                {
+                                    "businessId": 11439000,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9448"
+                                },
+                                {
+                                    "businessId": 11416756,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1585"
+                                },
+                                {
+                                    "businessId": 11417310,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2971"
+                                },
+                                {
+                                    "businessId": 11361843,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7"
+                                },
+                                {
+                                    "businessId": 11361467,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1851"
+                                },
+                                {
+                                    "businessId": 11362236,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1"
+                                },
+                                {
+                                    "businessId": 11371002,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7653"
+                                },
+                                {
+                                    "businessId": 11361822,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1704"
+                                },
+                                {
+                                    "businessId": 11417423,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9072"
+                                },
+                                {
+                                    "businessId": 11361768,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3"
+                                },
+                                {
+                                    "businessId": 11417250,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1671"
+                                },
+                                {
+                                    "businessId": 11361623,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9152"
+                                },
+                                {
+                                    "businessId": 11417956,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2945"
+                                },
+                                {
+                                    "businessId": 11417381,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2954"
+                                },
+                                {
+                                    "businessId": 11419315,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2867"
+                                },
+                                {
+                                    "businessId": 11361836,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9212"
+                                },
+                                {
+                                    "businessId": 11361719,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9285"
+                                },
+                                {
+                                    "businessId": 11361604,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9080"
+                                },
+                                {
+                                    "businessId": 11417352,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7650"
+                                },
+                                {
+                                    "businessId": 11361490,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3581"
+                                },
+                                {
+                                    "businessId": 11361093,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1015"
+                                },
+                                {
+                                    "businessId": 11419304,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1789"
+                                },
+                                {
+                                    "businessId": 11417209,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7677"
+                                },
+                                {
+                                    "businessId": 11417059,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7666"
+                                },
+                                {
+                                    "businessId": 11606060,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "720"
+                                },
+                                {
+                                    "businessId": 11361723,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1100"
+                                },
+                                {
+                                    "businessId": 11417612,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9442"
+                                },
+                                {
+                                    "businessId": 11417183,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1385"
+                                },
+                                {
+                                    "businessId": 11362009,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2538"
+                                },
+                                {
+                                    "businessId": 11417700,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1543"
+                                },
+                                {
+                                    "businessId": 11416576,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9441"
+                                },
+                                {
+                                    "businessId": 11606062,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "730"
+                                },
+                                {
+                                    "businessId": 11735354,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1792"
+                                },
+                                {
+                                    "businessId": 11605601,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9452"
+                                },
+                                {
+                                    "businessId": 11416904,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "36"
+                                },
+                                {
+                                    "businessId": 11360977,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2844"
+                                },
+                                {
+                                    "businessId": 11416768,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9464"
+                                },
+                                {
+                                    "businessId": 11362154,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3120"
+                                },
+                                {
+                                    "businessId": 11605634,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "733"
+                                },
+                                {
+                                    "businessId": 11874519,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1859"
+                                },
+                                {
+                                    "businessId": 11417216,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2943"
+                                },
+                                {
+                                    "businessId": 11361967,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3019"
+                                },
+                                {
+                                    "businessId": 11361425,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "469"
+                                },
+                                {
+                                    "businessId": 11756454,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "734"
+                                },
+                                {
+                                    "businessId": 11416785,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1974"
+                                },
+                                {
+                                    "businessId": 11361874,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "3625"
+                                },
+                                {
+                                    "businessId": 11362186,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "73"
+                                },
+                                {
+                                    "businessId": 11416828,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1279"
+                                },
+                                {
+                                    "businessId": 11466548,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1604"
+                                },
+                                {
+                                    "businessId": 11612580,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1713"
+                                },
+                                {
+                                    "businessId": 11417954,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1486"
+                                },
+                                {
+                                    "businessId": 11361090,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1454"
+                                },
+                                {
+                                    "businessId": 11417258,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7674"
+                                },
+                                {
+                                    "businessId": 11857728,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7693"
+                                },
+                                {
+                                    "businessId": 11612082,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2984"
+                                },
+                                {
+                                    "businessId": 11361096,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1793"
+                                },
+                                {
+                                    "businessId": 11361551,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9537"
+                                },
+                                {
+                                    "businessId": 11874428,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7746"
+                                },
+                                {
+                                    "businessId": 11417772,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1786"
+                                },
+                                {
+                                    "businessId": 11361926,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9177"
+                                },
+                                {
+                                    "businessId": 11417686,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2840"
+                                },
+                                {
+                                    "businessId": 11416946,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2941"
+                                },
+                                {
+                                    "businessId": 11455045,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9362"
+                                },
+                                {
+                                    "businessId": 11361154,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "595"
+                                },
+                                {
+                                    "businessId": 11417018,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "478"
+                                },
+                                {
+                                    "businessId": 11416854,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2957"
+                                },
+                                {
+                                    "businessId": 11454984,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9473"
+                                },
+                                {
+                                    "businessId": 11417246,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1562"
+                                },
+                                {
+                                    "businessId": 11806002,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2997"
+                                },
+                                {
+                                    "businessId": 11417288,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7678"
+                                },
+                                {
+                                    "businessId": 11361943,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1870"
+                                },
+                                {
+                                    "businessId": 11857723,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "745"
+                                },
+                                {
+                                    "businessId": 11361665,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7657"
+                                },
+                                {
+                                    "businessId": 11417783,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1054"
+                                },
+                                {
+                                    "businessId": 11419303,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1060"
+                                },
+                                {
+                                    "businessId": 11417259,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1001"
+                                },
+                                {
+                                    "businessId": 11416579,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9425"
+                                },
+                                {
+                                    "businessId": 11361140,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1527"
+                                },
+                                {
+                                    "businessId": 11361470,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9142"
+                                },
+                                {
+                                    "businessId": 11981459,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "7719"
+                                },
+                                {
+                                    "businessId": 11416783,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2084"
+                                },
+                                {
+                                    "businessId": 11360981,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1676"
+                                },
+                                {
+                                    "businessId": 11605628,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9501"
+                                },
+                                {
+                                    "businessId": 11612565,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9483"
+                                },
+                                {
+                                    "businessId": 11454961,
+                                    "businessName": "Hush Puppies Store",
+                                    "gmbStoreCode": "2806"
+                                },
+                                {
+                                    "businessId": 11441172,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "710"
+                                },
+                                {
+                                    "businessId": 11781065,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "736"
+                                },
+                                {
+                                    "businessId": 11416905,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "2953"
+                                },
+                                {
+                                    "businessId": 11417516,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1062"
+                                },
+                                {
+                                    "businessId": 11361721,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9187"
+                                },
+                                {
+                                    "businessId": 11362151,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1719"
+                                },
+                                {
+                                    "businessId": 11417404,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "9440"
+                                },
+                                {
+                                    "businessId": 11417519,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1699"
+                                },
+                                {
+                                    "businessId": 11459705,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "1039"
+                                },
+                                {
+                                    "businessId": 11361011,
+                                    "businessName": "Bata Shoe Store",
+                                    "gmbStoreCode": "5"
+                                }
+                            ],
+                            "intents": [
+                                "Complaint",
+                                "Exchange/Return",
+                                "Location & Directions",
+                                "Others",
+                                "Stock Availability",
+                                "Store Timings",
+                                "Unknown"
+                            ],
+                            "sentiments": [
+                                "Positive",
+                                "Neutral",
+                                "Negative"
+                            ],
+                            "issue_types": [
+                                "Size / Fit Complaints",
+                                "Product Quality Issues",
+                                "Defective / Damaged",
+                                "Exchange / Return Issues",
+                                "Service Dissatisfaction",
+                                "Store Experience"
+                            ],
+                            "categories": [
+                                "Accessories",
+                                "Comfort Range",
+                                "Men's Formal",
+                                "Others",
+                                "School Shoes",
+                                "Sneakers",
+                                "Unknown",
+                                "Women's Casual"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "https://api-suleka-bata.oicapps.com",
+            "description": "Local development URL"
+        }
+    ]
+}
