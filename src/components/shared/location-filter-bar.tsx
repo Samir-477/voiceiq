@@ -1,7 +1,7 @@
 'use client';
 
 import { MapPin, Calendar, Search, Filter, ChevronRight, ChevronLeft } from 'lucide-react';
-import { useMemo, useRef, useState, useEffect } from 'react';
+import { useMemo, useRef, useState, useEffect, useCallback } from 'react';
 import {
   Select,
   SelectContent,
@@ -73,13 +73,13 @@ export function LocationFilterBar() {
   const [showRightFade, setShowRightFade] = useState(false);
 
   // ── Scroll Indicator Logic ──
-  const checkScroll = () => {
+  const checkScroll = useCallback(() => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setShowLeftFade(scrollLeft > 20);
       setShowRightFade(scrollLeft < scrollWidth - clientWidth - 20);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -87,8 +87,6 @@ export function LocationFilterBar() {
       checkScroll();
       el.addEventListener('scroll', checkScroll);
       window.addEventListener('resize', checkScroll);
-      
-      // Also check on a slight delay to ensure content is rendered
       const timer = setTimeout(checkScroll, 100);
       return () => {
         el.removeEventListener('scroll', checkScroll);
@@ -96,7 +94,7 @@ export function LocationFilterBar() {
         clearTimeout(timer);
       };
     }
-  }, [filterOptions, filters]); // Re-check when options or filter state changes
+  }, [filterOptions, checkScroll]); // Only re-run when filter options load
 
   // ── Derived Options ──
   const states = useMemo(() => {
@@ -113,10 +111,7 @@ export function LocationFilterBar() {
     )).sort();
   }, [filterOptions, filters.stateName]);
 
-  const stores = useMemo(() => {
-    if (!filterOptions?.stores) return [];
-    return filterOptions.stores;
-  }, [filterOptions]);
+  const stores = filterOptions?.stores ?? [];
 
   const handleDateChange = (val: string) => {
     const { start, end } = getDateRange(val);

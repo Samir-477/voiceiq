@@ -1,5 +1,13 @@
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 const API_KEY  = process.env.NEXT_PUBLIC_X_API_KEY  || '';
+const TIMEOUT_MS = 30_000;
+
+/** Creates an AbortSignal that auto-cancels after TIMEOUT_MS */
+function createSignal(): AbortSignal {
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), TIMEOUT_MS);
+  return controller.signal;
+}
 
 export async function fetchWithAuth(url: string) {
   const headers = {
@@ -8,7 +16,7 @@ export async function fetchWithAuth(url: string) {
   };
 
   const fullUrl = url.startsWith('http') ? url : `${BASE_URL}${url}`;
-  const res = await fetch(fullUrl, { headers });
+  const res = await fetch(fullUrl, { headers, signal: createSignal() });
   
   if (!res.ok) {
     throw new Error(`API Error: ${res.statusText} (${res.status})`);
@@ -27,7 +35,7 @@ export async function fetchRawWithAuth(url: string) {
   };
 
   const fullUrl = url.startsWith('http') ? url : `${BASE_URL}${url}`;
-  const res = await fetch(fullUrl, { headers });
+  const res = await fetch(fullUrl, { headers, signal: createSignal() });
   
   if (!res.ok) {
     throw new Error(`API Error: ${res.statusText} (${res.status})`);
@@ -48,6 +56,7 @@ export async function postWithAuth(url: string, body: unknown) {
     method: 'POST',
     headers,
     body: JSON.stringify(body),
+    signal: createSignal(),
   });
 
   if (!res.ok) {

@@ -57,7 +57,6 @@ export default function OperationsPage() {
     queryFn: () => fetchWithAuth(`/api/v1/analytics/ops/geo-breakdown${geoQsPrefix}tab=city`).then(d => Array.isArray(d[0]) ? d[0] : d),
   });
 
-  const loading = loadingSummary || loadingWeekly || loadingRegion || loadingGeoStore || loadingGeoState || loadingGeoCity;
 
   return (
     <div className="min-h-screen bg-gray-50/30">

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { FilterOptions } from '@/types/api';
+import { fetchWithAuth } from '@/lib/api-client';
 
 export interface Filters {
   start_date?: string;
@@ -32,9 +33,6 @@ const FiltersContext = createContext<FiltersContextType>({
   resetFilters: () => {},
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-const API_KEY  = process.env.NEXT_PUBLIC_X_API_KEY  || '';
-
 export function FilterProvider({ children }: { children: ReactNode }) {
   const DEFAULT_START = '2026-02-01';
   const DEFAULT_END   = '2026-04-08';
@@ -51,19 +49,11 @@ export function FilterProvider({ children }: { children: ReactNode }) {
     async function fetchFilterOptions() {
       setLoadingOptions(true);
       try {
-        const res = await fetch(`${BASE_URL}/api/v1/insights/filters`, {
-          headers: {
-            'X-API-Key': API_KEY,
-            'Content-Type': 'application/json',
-          },
-        });
-        if (!res.ok) throw new Error('Failed to fetch filter options');
-        const data = await res.json();
-        // Handle both cases: data is an array or a single object
+        const data = await fetchWithAuth('/api/v1/insights/filters');
         const options = Array.isArray(data) ? data[0] : data;
         setFilterOptions(options);
-      } catch (err) {
-        console.error('Error fetching filter options:', err);
+      } catch {
+        // Filter options are non-critical — UI degrades gracefully with no dropdowns
       } finally {
         setLoadingOptions(false);
       }

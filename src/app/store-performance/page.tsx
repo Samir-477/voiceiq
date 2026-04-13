@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import { useQuery } from '@tanstack/react-query';
 import { Header } from '@/components/layout/header';
 import { LocationFilterBar } from '@/components/shared/location-filter-bar';
@@ -47,6 +49,33 @@ export default function StorePerformancePage() {
 
   const loading = loadingList || loadingDrivers || loadingPersona || loadingCategory;
 
+  // Memoize all KPI calculations so the IIFE + reduce runs only when storeList changes
+  const storeKpiData = useMemo(() => {
+    if (!storeList || storeList.length === 0) return null;
+    const activeTimes = storeList
+      .map(s => s.avg_handle_time)
+      .filter((t): t is string => Boolean(t && t.includes('m')));
+    let avgHandleTime = '—';
+    if (activeTimes.length > 0) {
+      const totalSecs = activeTimes.reduce((acc, t) => {
+        const msFull = t.match(/(\d+)m\s*(\d+)s/);
+        if (msFull) return acc + parseInt(msFull[1]) * 60 + parseInt(msFull[2]);
+        const msMin = t.match(/(\d+)m/);
+        if (msMin) return acc + parseInt(msMin[1]) * 60;
+        return acc;
+      }, 0);
+      const avgSecs = Math.round(totalSecs / activeTimes.length);
+      avgHandleTime = `${Math.floor(avgSecs / 60)}m ${avgSecs % 60}s`;
+    }
+    return {
+      activeStores:  { value: String(storeList.filter(s => (s.total_calls || 0) > 0).length), subtitle: 'above zero calls' },
+      zeroCallStores:{ value: String(storeList.filter(s => (s.total_calls || 0) === 0).length), subtitle: 'need attention', trendUp: false },
+      totalCalls:    { value: storeList.reduce((acc, s) => acc + (s.total_calls || 0), 0).toLocaleString(), subtitle: 'across all stores' },
+      avgConversion: { value: `${(storeList.reduce((acc, s) => acc + (s.conversion_pct || 0), 0) / storeList.length).toFixed(1)}%`, subtitle: 'average rate', trendUp: true },
+      avgHandleTime: { value: avgHandleTime, subtitle: 'per call' },
+    };
+  }, [storeList]);
+
   return (
     <div className="min-h-screen bg-gray-50/30">
       <Header
@@ -60,50 +89,9 @@ export default function StorePerformancePage() {
 
           {/* KPI Row */}
           <div className="mt-6">
-            <StoreKpis 
-              data={storeList && storeList.length > 0 ? {
-                activeStores: { 
-                  value: String(storeList.filter(s => (s.total_calls || 0) > 0).length), 
-                  subtitle: 'above zero calls' 
-                },
-                zeroCallStores: { 
-                  value: String(storeList.filter(s => (s.total_calls || 0) === 0).length), 
-                  subtitle: 'need attention',
-                  trendUp: false 
-                },
-                totalCalls: { 
-                  value: storeList.reduce((acc, s) => acc + (s.total_calls || 0), 0).toLocaleString(), 
-                  subtitle: 'across all stores' 
-                },
-                avgConversion: { 
-                  value: `${(storeList.reduce((acc, s) => acc + (s.conversion_pct || 0), 0) / (storeList.length || 1)).toFixed(1)}%`, 
-                  subtitle: 'average rate',
-                  trendUp: true 
-                },
-                avgHandleTime: { 
-                  value: (() => {
-                    const times = storeList
-                      .map(s => s.avg_handle_time)
-                      .filter(t => t && t.includes('m'));
-                    if (times.length === 0) return '—';
-                    
-                    const totalSecs = times.reduce((acc, t) => {
-                      const match = t.match(/(\d+)m\s*(\d+)s/);
-                      if (match) return acc + parseInt(match[1]) * 60 + parseInt(match[2]);
-                      const mMatch = t.match(/(\d+)m/);
-                      if (mMatch) return acc + parseInt(mMatch[1]) * 60;
-                      return acc;
-                    }, 0);
-
-                    const avgSecs = Math.round(totalSecs / times.length);
-                    const m = Math.floor(avgSecs / 60);
-                    const s = avgSecs % 60;
-                    return `${m}m ${s}s`;
-                  })(),
-                  subtitle: 'per call' 
-                }
-              } : null} 
-              loading={loadingList} 
+            <StoreKpis
+              data={storeKpiData}
+              loading={loadingList}
             />
           </div>
 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { LogIn, Lock, Mail, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
@@ -54,7 +55,7 @@ export default function LoginPage() {
               transition={{ duration: 0.5 }}
               className="inline-block mb-3"
             >
-              <img src="/VoiceIQ_.svg" alt="VoiceIQ" className="h-14 w-auto object-contain" />
+              <Image src="/VoiceIQ_.svg" alt="VoiceIQ" width={112} height={56} className="h-14 w-auto object-contain" priority />
             </motion.div>
             <h1 className="text-2xl font-bold text-slate-800 tracking-tight">Call Analytics</h1>
             <p className="text-slate-500 text-sm mt-2 font-medium">Please sign in to your dashboard</p>

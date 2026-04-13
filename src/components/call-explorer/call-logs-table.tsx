@@ -44,17 +44,14 @@ function toRow(item: CallLogItem, idx: number) {
     region:        item.region       || '—',
     duration:      item.duration     || '—',
     intent:        item.intent       || '—',
-    type:          item.intent       || '—',
     sentiment:     item.sentiment    || '—',
     persona:       item.persona      || '—',
     category:      item.product_category || '—',
     converted:     Boolean(item.is_conversion),
     timestamp:     item.timestamp    || '—',
-    store:         city && state ? `${city}, ${state}` : item.store_name || '—',
     agent:         item.agent_name   || '—',
     summary:       item.short_summary || '',
     recording_url: item.recording_url,
-    transcript:    undefined,
   };
 }
 

@@ -14,8 +14,8 @@ export function QueryProvider({ children }: { children: ReactNode }) {
             staleTime: 5 * 60 * 1000,
             // Retry once on failure
             retry: 1,
-            // Refetch on window focus for better dashboard sync
-            refetchOnWindowFocus: true,
+            // Disable window-focus refetch — prevents 8+ parallel API hits on tab switch
+            refetchOnWindowFocus: false,
           },
         },
       })
@@ -24,7 +24,9 @@ export function QueryProvider({ children }: { children: ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <ReactQueryDevtools initialIsOpen={false} />
+      {process.env.NODE_ENV === 'development' && (
+        <ReactQueryDevtools initialIsOpen={false} />
+      )}
     </QueryClientProvider>
   );
 }

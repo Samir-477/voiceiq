@@ -112,7 +112,7 @@ export default function ReportsPage() {
             <ComplaintsByRegionChart
               data={(dashboard?.complaints_by_region ?? []).map((r) => ({
                 region:     r.region,
-                complaints: (r as any).count ?? (r as any).complaints ?? 0,
+                complaints: r.count ?? r.complaints ?? 0,
               }))}
               loading={loadingDashboard}
             />

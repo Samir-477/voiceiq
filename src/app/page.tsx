@@ -75,8 +75,6 @@ export default function OverviewPage() {
     queryFn: () => fetchWithAuth(`/api/v1/analytics/kpi/stores-attention${qs}`).then(d => Array.isArray(d[0]) ? d[0] : d),
   });
 
-  const loading = loadingSummary || loadingAudience || loadingVoice || loadingIntent || 
-                  loadingWeekly || loadingMissed || loadingRegion || loadingAttention;
 
   const intentDist = useMemo(() => {
     return Array.isArray(intentData?.intents) ? intentData.intents : [];
@@ -106,7 +104,7 @@ export default function OverviewPage() {
       },
       {
         id: 'high_intent_calls',
-        label: 'high_intent_calls',
+        label: 'High Intent Calls',
         value: (kpiSummary.high_intent_calls || 0).toLocaleString(),
         trend: calculateTrend(kpiSummary.high_intent_trend ?? []),
         icon: 'crosshair',

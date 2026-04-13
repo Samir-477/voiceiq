@@ -53,7 +53,6 @@ export default function CustomerExperiencePage() {
     queryFn: () => fetchWithAuth(`/api/v1/analytics/kpi/voice-quality${qs}`).then(d => Array.isArray(d) ? d[0] : d),
   });
 
-  const loading = loadingSummary || loadingSentiment || loadingComplaints || loadingPersona || loadingVoice;
 
   // Transform voiceRaw for display
   const voiceQuality = useMemo(() => {

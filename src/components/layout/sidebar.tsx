@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   Users,
@@ -17,7 +18,6 @@ import {
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 type NavItem = {
   href: string;
@@ -49,12 +49,7 @@ export function Sidebar() {
     setNavigatingTo(null);
   }, [pathname]);
 
-  const handleNav = (href: string) => {
-    if (isNavigating || pathname === href) return;
-    setIsNavigating(true);
-    setNavigatingTo(href);
-    router.push(href);
-  };
+
 
   return (
     <aside
@@ -71,10 +66,13 @@ export function Sidebar() {
       )}>
         {/* Icon – always visible, bigger */}
         <div className="shrink-0 w-11 h-11 rounded-xl bg-white/15 flex items-center justify-center overflow-hidden">
-          <img
+          <Image
             src="/VoiceIQ_.svg"
             alt="VoiceIQ logo"
-            className="w-11 h-11 object-contain brightness-0 invert"
+            width={44}
+            height={44}
+            className="object-contain brightness-0 invert"
+            priority
           />
         </div>
 
@@ -99,14 +97,19 @@ export function Sidebar() {
           const Icon = item.icon;
 
           return (
-            <button
+          <Link
               key={item.href}
-              onClick={() => handleNav(item.href)}
-              disabled={isNavigating}
+              href={item.href}
+              onClick={() => {
+                if (!isNavigating && pathname !== item.href) {
+                  setIsNavigating(true);
+                  setNavigatingTo(item.href);
+                }
+              }}
               className={cn(
                 'group flex items-center h-12 transition-all duration-200 overflow-hidden relative mx-2 rounded-xl text-left w-[calc(100%-16px)]',
                 isHovered ? 'px-4' : 'justify-center',
-                isNavigating && !isTarget ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+                isNavigating && !isTarget ? 'opacity-50 pointer-events-none' : ''
               )}
             >
               {(isActive || isTarget) && (
@@ -147,7 +150,7 @@ export function Sidebar() {
                   </motion.span>
                 )}
               </AnimatePresence>
-            </button>
+            </Link>
           );
         })}
       </nav>

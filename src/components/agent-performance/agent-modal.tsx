@@ -137,7 +137,7 @@ function ProgressBar({ label, pct, color = '#ef4444' }: { label: string; pct: nu
 
 // ── Sentiment badge ──────────────────────────────────────────────────────────
 function SentimentBadge({ s }: { s: string }) {
-  const cls = s === 'Positive' ? 'bg-red-500 text-white' :
+  const cls = s === 'Positive' ? 'bg-emerald-500 text-white' :
               s === 'Negative' ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600';
   return <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${cls}`}>{s}</span>;
 }

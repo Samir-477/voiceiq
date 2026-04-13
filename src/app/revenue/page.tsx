@@ -41,28 +41,29 @@ export default function RevenueIntelligencePage() {
 
   const loading = loadingSummary || loadingRegion || loadingCategory;
 
+  // Pre-compute a lookup map from category name → item for O(1) access
+  const categoryMap = useMemo(
+    () => new Map((categoryData ?? []).map(c => [c.category.toLowerCase(), c])),
+    [categoryData]
+  );
+
   // Transform category data for TopDemandedProducts component using summary.category_breakdown
   const topProducts = useMemo(() => {
     if (!summary?.category_breakdown) return [];
 
-    // Map over the entries in the category_breakdown dictionary
     return Object.entries(summary.category_breakdown)
       .map(([name, count]) => {
-        // Find matching entry in categoryData to get conversion_pct
-        const matchingEntry = (categoryData || []).find(c => 
-          c.category.toLowerCase() === name.toLowerCase()
-        );
-
+        const match = categoryMap.get(name.toLowerCase());
         return {
           id: name,
           name: name,
           requests: count,
-          fulfillmentPct: matchingEntry ? Math.round(matchingEntry.conversion_pct) : 0
+          fulfillmentPct: match ? Math.round(match.conversion_pct) : 0,
         };
       })
-      .sort((a, b) => b.requests - a.requests) // Sort by most requests
-      .slice(0, 5); // Take top 5
-  }, [summary, categoryData]);
+      .sort((a, b) => b.requests - a.requests)
+      .slice(0, 5);
+  }, [summary, categoryMap]);
 
   return (
     <div className="min-h-screen bg-[#fafafa]">

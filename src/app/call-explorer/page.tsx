@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Header } from '@/components/layout/header';
 import { LocationFilterBar } from '@/components/shared/location-filter-bar';
@@ -49,7 +50,10 @@ export default function CallExplorerPage() {
 
   const loading = loadingSummary || loadingSentiment || loadingIntent || loadingLogs;
 
-  const intentDist = Array.isArray(intentDistData?.intents) ? intentDistData.intents : [];
+  const intentDist = useMemo(
+    () => (Array.isArray(intentDistData?.intents) ? intentDistData.intents : []),
+    [intentDistData]
+  );
   
   const callLogs = callLogData?.results || [];
   const totalCalls = callLogData?.total ?? callLogs.length;
