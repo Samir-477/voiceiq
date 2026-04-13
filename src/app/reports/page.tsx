@@ -41,13 +41,16 @@ export default function ReportsPage() {
     mutate: submitQuestion,
     data: queryResult,
     isPending: isAsking,
+    isError: queryFailed,
+    error:   queryError,
     reset: resetAnswer,
   } = useMutation<NlpQueryResponse, Error, string>({
     mutationFn: (question: string) =>
-      postWithAuth('/api/v1/chat-with-data/query', {
-        question,
-        recursion_limit: 50,
-      }),
+      postWithAuth(
+        '/api/v1/chat-with-data/query',
+        { question, recursion_limit: 50 },
+        3 * 60 * 1000  // 3-minute timeout — LLM agent takes 60–120s
+      ),
   });
 
   // ── Normalise reports list to component prop shape ──────────────────────────
@@ -67,15 +70,31 @@ export default function ReportsPage() {
     actionText: i.actionText ?? i.suggestion ?? i.action_text ?? i.action ?? '',
   }));
 
-  // ── Extract the query result text (field name unknown until runtime) ─────────
-  const answerText =
-    queryResult?.report   ??
-    queryResult?.result   ??
-    queryResult?.answer   ??
-    queryResult?.markdown ??
-    queryResult?.output   ??
-    queryResult?.message  ??
-    null;
+  // ── Extract the report text ────────────────────────────────────────────
+  const answerText: string | null = (() => {
+    if (!queryResult) return null;
+    // report_markdown is the confirmed actual API field name
+    return (
+      queryResult.report_markdown ??
+      queryResult.report          ??
+      queryResult.result          ??
+      queryResult.answer          ??
+      queryResult.markdown        ??
+      queryResult.output          ??
+      queryResult.message         ??
+      // Universal fallback: any string longer than 80 chars (avoids picking up client/table/question)
+      Object.values(queryResult as Record<string, unknown>)
+        .find((v): v is string => typeof v === 'string' && v.length > 80) ??
+      null
+    );
+  })();
+
+  // ── Metadata to display alongside the report ──────────────────────────────
+  const queryMeta = queryResult ? {
+    table:    queryResult.table,
+    client:   queryResult.client,
+    sqlTrace: queryResult.sql_trace,
+  } : null;
 
   const loading = loadingDashboard || loadingReports;
 
@@ -94,6 +113,8 @@ export default function ReportsPage() {
               result={answerText}
               loading={isAsking}
               onReset={resetAnswer}
+              error={queryFailed ? (queryError?.message ?? 'Request failed — check the console for details.') : null}
+              queryMeta={queryMeta}
             />
           </div>
 

@@ -555,12 +555,20 @@ export interface NlpDashboardResponse {
  * Field name is normalised defensively since the API response shape is undocumented.
  */
 export interface NlpQueryResponse {
-  report?:   string;
-  result?:   string;
-  answer?:   string;
-  markdown?: string;
-  output?:   string;
-  message?:  string;
+  // Actual API field (confirmed from network response)
+  report_markdown?: string;
+  // Legacy / alternative field names (defensive fallbacks)
+  report?:          string;
+  result?:          string;
+  answer?:          string;
+  markdown?:        string;
+  output?:          string;
+  message?:         string;
+  // Metadata fields returned alongside the report
+  client?:          string;
+  question?:        string;
+  table?:           string;
+  sql_trace?:       Array<{ tool: string; input?: string; output?: string; [key: string]: unknown }>;
 }
 
 /**
@@ -621,6 +629,11 @@ export interface AgentVoiceQualityResponse {
  */
 export interface AgentLeaderboardApiItem {
   rank?:           number;
+  // Actual API fields (confirmed from network)
+  agent_num?:      string;   // phone number used as agent ID e.g. "9926122040"
+  qa_score?:       number;   // QA score 0-100
+  calls?:          number;   // total calls handled
+  // Alternative field names (defensive)
   agent_name?:     string;
   agentName?:      string;
   store_name?:     string;

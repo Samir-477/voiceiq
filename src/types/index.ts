@@ -79,10 +79,12 @@ export interface VoiceQualityRadarData {
 export interface AgentLeaderboardRecord {
   id: string;
   rank: number;
-  agentName: string;
+  agentNum: string;      // actual agent identifier from API (phone number)
+  agentName: string;     // display name fallback
   storeName: string;
   region: string;
-  qualifiedPct: number;
+  qaScore: number;       // qa_score from API
+  qualifiedPct: number;  // fallback
   conversionPct: number;
   tonePct: number;
   totalCalls: number;

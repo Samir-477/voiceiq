@@ -75,15 +75,17 @@ export default function AgentPerformancePage() {
   // ── Transform: leaderboard → AgentLeaderboardRecord[] ─────────────────────
   const leaderboardData: AgentLeaderboardRecord[] = (leaderboardRaw ?? []).map(
     (agent: AgentLeaderboardApiItem, idx: number) => ({
-      id:            `${agent.rank ?? idx + 1}-${agent.agent_name ?? agent.agentName ?? idx}`,
-      rank:          agent.rank                                             ?? idx + 1,
-      agentName:     agent.agent_name      ?? agent.agentName              ?? '—',
-      storeName:     agent.store_name      ?? agent.storeName              ?? '—',
-      region:        agent.region                                           ?? '—',
-      qualifiedPct:  agent.qualified_pct   ?? agent.qualifiedPct           ?? 0,
-      conversionPct: agent.conversion_pct  ?? agent.conversionPct          ?? 0,
-      tonePct:       agent.tone_pct        ?? agent.tonePct                ?? 0,
-      totalCalls:    agent.total_calls     ?? agent.totalCalls             ?? 0,
+      id:            agent.agent_num ?? `${idx + 1}`,
+      rank:          agent.rank                                                  ?? idx + 1,
+      agentNum:      agent.agent_num      ?? '—',
+      agentName:     agent.agent_name     ?? agent.agentName                     ?? '—',
+      storeName:     agent.store_name     ?? agent.storeName                     ?? '—',
+      region:        agent.region                                                ?? '—',
+      qaScore:       agent.qa_score                                              ?? 0,
+      qualifiedPct:  agent.qualified_pct  ?? agent.qualifiedPct                  ?? 0,
+      conversionPct: agent.conversion_pct ?? agent.conversionPct                 ?? 0,
+      tonePct:       agent.tone_pct       ?? agent.tonePct                       ?? 0,
+      totalCalls:    agent.calls          ?? agent.total_calls  ?? agent.totalCalls ?? 0,
     })
   );
 

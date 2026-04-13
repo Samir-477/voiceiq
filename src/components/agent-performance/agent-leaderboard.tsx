@@ -49,10 +49,10 @@ export function AgentLeaderboard({ data = [], loading }: AgentLeaderboardProps) 
             <thead className="text-xs text-gray-500 bg-gray-50/50 uppercase border-b border-gray-100">
               <tr>
                 <th scope="col" className="px-4 py-4 font-semibold text-center w-16">#</th>
-                <th scope="col" className="px-4 py-4 font-semibold">Agent</th>
+                <th scope="col" className="px-4 py-4 font-semibold">Agent No.</th>
                 <th scope="col" className="px-4 py-4 font-semibold">Store</th>
                 <th scope="col" className="px-4 py-4 font-semibold">Region</th>
-                <th scope="col" className="px-4 py-4 font-semibold text-center">Qualified</th>
+                <th scope="col" className="px-4 py-4 font-semibold text-center">QA Score</th>
                 <th scope="col" className="px-4 py-4 font-semibold text-center">Conversion</th>
                 <th scope="col" className="px-4 py-4 font-semibold text-center">Tone</th>
                 <th scope="col" className="px-4 py-4 font-semibold text-center">Calls</th>
@@ -73,12 +73,19 @@ export function AgentLeaderboard({ data = [], loading }: AgentLeaderboardProps) 
                         {agent.rank}
                       </span>
                     </td>
-                    <td className="px-4 py-4 font-semibold text-gray-900 group-hover:text-red-600 transition-colors">
-                      {agent.agentName}
+                    <td className="px-4 py-4 font-semibold text-gray-900 group-hover:text-red-600 transition-colors font-mono text-sm">
+                      {agent.agentNum}
                     </td>
                     <td className="px-4 py-4 text-gray-600">{agent.storeName}</td>
                     <td className="px-4 py-4 text-gray-600">{agent.region}</td>
-                    <td className="px-4 py-4 text-center font-medium text-gray-900">{agent.qualifiedPct}</td>
+                    <td className="px-4 py-4 text-center">
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold ${
+                        agent.qaScore >= 85 ? 'bg-emerald-50 text-emerald-700' :
+                        agent.qaScore >= 75 ? 'bg-amber-50 text-amber-700' : 'bg-red-50 text-red-700'
+                      }`}>
+                        {agent.qaScore}%
+                      </span>
+                    </td>
                     <td className="px-4 py-4 text-center font-medium text-gray-900">{agent.conversionPct}%</td>
                     <td className="px-4 py-4 text-center font-medium text-emerald-500">{agent.tonePct}%</td>
                     <td className="px-4 py-4 text-center font-medium text-gray-900">{agent.totalCalls}</td>
