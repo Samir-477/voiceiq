@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-poppins);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+:root {
+  --background: #f0f4f8;
+  --foreground: #1a1a2e;
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a2e;
+  --primary: #b91c1c;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1a1a2e;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #fef2f2;
+  --accent-foreground: #991b1b;
+  --destructive: #ef4444;
+  --border: #e8ecf1;
+  --input: #e8ecf1;
+  --ring: #b91c1c;
+  --sidebar: #8b1a1a;
+  --sidebar-foreground: #ffffff;
+  --radius: 0.875rem;
+
+  /* Print specific optimizations */
+  @media print {
+    .no-print, 
+    aside, 
+    button, 
+    .filter-select {
+      display: none !important;
+    }
+    
+    main {
+       margin-left: 0 !important;
+       padding: 0 !important;
+       width: 100% !important;
+    }
+
+    body {
+       background: white !important;
+       zoom: 0.75; /* Ensure all charts fit well in A4 */
+    }
+
+    .dashboard-card {
+       break-inside: avoid;
+       border-color: #eee !important;
+       box-shadow: none !important;
+    }
+  }
+
+  /* Semantic status colors */
+  --color-success: #16a34a;
+  --color-success-bg: #f0fdf4;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fffbeb;
+  --color-danger: #ef4444;
+  --color-danger-bg: #fef2f2;
+  --color-info: #8b5cf6;
+  --color-info-bg: #f5f3ff;
+}
+
+* {
+  @apply border-border outline-ring/50;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+html {
+  font-size: 100%; /* Scales all rem-based units globally (Tailwind's w-, h-, p-, m-, text- etc.) */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Card System */
+.dashboard-card {
+  @apply bg-card rounded-2xl border border-border/60 p-6;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dashboard-card:hover {
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Animated shimmer for skeletons */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 25%,
+    #e2e8f0 50%,
+    #f1f5f9 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Sidebar active indicator */
+.sidebar-item {
+  @apply relative flex items-center rounded-xl transition-all duration-200 cursor-pointer;
+}
+
+.sidebar-item.active {
+  @apply bg-white/20;
+}
+
+.sidebar-item:hover:not(.active) {
+  @apply bg-white/10;
+}
+
+/* Smooth page transitions */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+
+/* Custom scrollbar for WebKit */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+.modern-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(239, 68, 68, 0.4) transparent;
+}
+
+.modern-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.modern-scroll::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 10px;
+}
+
+.modern-scroll::-webkit-scrollbar-thumb {
+  background: rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.modern-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(239, 68, 68, 0.6);
+}
+
+/* Filter bar styles */
+.filter-select {
+  @apply h-10 px-4 rounded-xl text-sm font-medium bg-card border border-border/60 
+    cursor-pointer transition-all duration-150;
+}
+
+.filter-select:hover {
+  @apply border-primary/40;
+}
+
+/* Badge variants */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide;
+}
+
+.badge-success {
+  @apply text-emerald-700 bg-emerald-50 border border-emerald-200/60;
+}
+
+.badge-danger {
+  @apply text-red-700 bg-red-50 border border-red-200/60;
+}
+
+.badge-warning {
+  @apply text-amber-700 bg-amber-50 border border-amber-200/60;
+}
+
+.badge-info {
+  @apply text-violet-700 bg-violet-50 border border-violet-200/60;
+}
+
+.badge-neutral {
+  @apply text-slate-600 bg-slate-100 border border-slate-200/60;
+}
+
+.badge-outline-red {
+  @apply text-red-600 bg-white border border-red-300;
+}
+
+.badge-outline-blue {
+  @apply text-blue-600 bg-white border border-blue-300;
+}
+
+/* Table styles */
+.data-table th {
+  @apply text-xs font-semibold text-muted-foreground uppercase tracking-wider py-3 px-4 text-left;
+}
+
+.data-table td {
+  @apply py-4 px-4 text-sm border-t border-border/40;
+}
+
+.data-table tbody tr {
+  @apply transition-colors duration-150;
+}
+
+.data-table tbody tr:hover {
+  @apply bg-accent/50;
+}
+
+/* Heatmap cell colors */
+.heatmap-low { @apply bg-emerald-100 text-emerald-800; }
+.heatmap-medium { @apply bg-yellow-100 text-yellow-800; }
+.heatmap-high { @apply bg-orange-100 text-orange-800; }
+.heatmap-critical { @apply bg-red-100 text-red-800; }
+.heatmap-extreme { @apply bg-red-200 text-red-900 font-bold; }
