@@ -1,15 +1,15 @@
 'use client';
 
-import { Star, ThumbsUp, Clock, Phone } from 'lucide-react';
+import { Building2, AlertTriangle, TrendingUp, Phone } from 'lucide-react';
 
 const kpis = [
-  { label: 'Avg CSAT', value: '4.1/5', icon: Star },
-  { label: 'Avg FCR', value: '73.8%', icon: ThumbsUp },
-  { label: 'Avg Handle Time', value: '4m 33s', icon: Clock },
-  { label: 'Total Calls Today', value: '582', icon: Phone },
+  { label: 'Total Branches',   value: '8',    icon: Building2 },
+  { label: 'Branches at Risk', value: '2',    icon: AlertTriangle },
+  { label: 'Best Branch FCR',  value: '80%',  icon: TrendingUp },
+  { label: 'Total Calls',      value: '970',  icon: Phone },
 ];
 
-export function AgentKpiCards() {
+export function BranchKpiCards() {
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {kpis.map(({ label, value, icon: Icon }) => (

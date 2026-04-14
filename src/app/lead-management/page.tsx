@@ -1,37 +1,37 @@
 'use client';
 
-import { CxKpiCards } from '@/components/customer-experience/cx-kpi-cards';
-import { CxSentimentAndComplaints } from '@/components/customer-experience/cx-sentiment-and-complaints';
-import { CxCsatByIntent } from '@/components/customer-experience/cx-csat-by-intent';
-import { CxAiInsights } from '@/components/customer-experience/cx-ai-insights';
+import { LeadKpiCards } from '@/components/lead-management/lead-kpi-cards';
+import { LeadFunnelAndSource } from '@/components/lead-management/lead-funnel-and-source';
+import { LeadPipelineTable } from '@/components/lead-management/lead-pipeline-table';
+import { LeadAiInsights } from '@/components/lead-management/lead-ai-insights';
 
-export default function CustomerExperiencePage() {
+export default function LeadManagementPage() {
   return (
     <div className="min-h-screen bg-gray-50/40">
 
       {/* ── Page Header ─────────────────────────────────────────────────────── */}
       <div className="px-8 pt-7 pb-2">
         <h1 className="text-[22px] font-bold text-gray-900 leading-tight tracking-tight">
-          Customer Experience
+          Lead Management
         </h1>
         <p className="text-[13px] text-gray-500 font-normal mt-0.5">
-          Understand customer sentiment, complaints, and satisfaction drivers
+          Track and convert gold loan enquiries into disbursals
         </p>
       </div>
 
       <div className="px-8 pb-10 space-y-4 mt-3">
 
         {/* ── 1. KPI Cards ─────────────────────────────────────────────────── */}
-        <CxKpiCards />
+        <LeadKpiCards />
 
-        {/* ── 2. Sentiment Distribution + Top Complaints ───────────────────── */}
-        <CxSentimentAndComplaints />
+        {/* ── 2. Lead Conversion Funnel + Source Distribution ──────────────── */}
+        <LeadFunnelAndSource />
 
-        {/* ── 3. CSAT by Intent Category ───────────────────────────────────── */}
-        <CxCsatByIntent />
+        {/* ── 3. Lead Pipeline Table (with Hot/Warm/Cold filter) ───────────── */}
+        <LeadPipelineTable />
 
         {/* ── 4. AI Insights & Recommended Actions ─────────────────────────── */}
-        <CxAiInsights />
+        <LeadAiInsights />
 
       </div>
     </div>

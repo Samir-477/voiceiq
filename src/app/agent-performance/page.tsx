@@ -1,35 +1,38 @@
 'use client';
 
-import { Header } from '@/components/layout/header';
-import { LocationFilterBar } from '@/components/shared/location-filter-bar';
-import { mockAgentPerformanceData } from './mock-data';
 import { AgentKpiCards } from '@/components/agent-performance/agent-kpi-cards';
-import { VoiceQualityRadar } from '@/components/agent-performance/voice-quality-radar';
 import { AgentLeaderboard } from '@/components/agent-performance/agent-leaderboard';
-import { AgentCoachingInsights } from '@/components/agent-performance/agent-coaching-insights';
+import { AgentCsatFcrChart } from '@/components/agent-performance/agent-csat-fcr-chart';
+import { AgentAiInsights } from '@/components/agent-performance/agent-ai-insights';
 
 export default function AgentPerformancePage() {
-  const { kpis, voiceQuality, leaderboard, insights, suggestedActions } = mockAgentPerformanceData;
-
   return (
-    <div className="min-h-screen bg-[#fafafa]">
-      <Header 
-        title="Agent Performance" 
-        subtitle="Measure and improve agent-level performance using call & voice analytics" 
-      />
+    <div className="min-h-screen bg-gray-50/40">
 
-      <div className="px-8 pb-8 mt-6">
-        <div className="animate-fade-in-up">
-          <LocationFilterBar />
-          <AgentKpiCards metrics={kpis} />
+      {/* ── Page Header ─────────────────────────────────────────────────────── */}
+      <div className="px-8 pt-7 pb-2">
+        <h1 className="text-[22px] font-bold text-gray-900 leading-tight tracking-tight">
+          Agent Performance
+        </h1>
+        <p className="text-[13px] text-gray-500 font-normal mt-0.5">
+          Monitor individual agent metrics and identify coaching opportunities
+        </p>
+      </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 items-stretch">
-            <VoiceQualityRadar data={voiceQuality} />
-            <AgentLeaderboard data={leaderboard} />
-          </div>
+      <div className="px-8 pb-10 space-y-4 mt-3">
 
-          <AgentCoachingInsights insights={insights} suggestedActions={suggestedActions} />
-        </div>
+        {/* ── 1. KPI Cards ─────────────────────────────────────────────────── */}
+        <AgentKpiCards />
+
+        {/* ── 2. Agent Leaderboard ─────────────────────────────────────────── */}
+        <AgentLeaderboard />
+
+        {/* ── 3. CSAT & FCR Comparison Chart ───────────────────────────────── */}
+        <AgentCsatFcrChart />
+
+        {/* ── 4. AI Insights & Recommended Actions ─────────────────────────── */}
+        <AgentAiInsights />
+
       </div>
     </div>
   );

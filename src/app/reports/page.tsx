@@ -1,39 +1,34 @@
 'use client';
 
-import { Header } from '@/components/layout/header';
-import { LocationFilterBar } from '@/components/shared/location-filter-bar';
-import { AskQuestion } from '@/components/reports/ask-question';
-import { GeneratedReportsTable } from '@/components/reports/generated-reports-table';
-import { WeeklyPerformanceTrendChart } from '@/components/reports/weekly-performance-trend';
-import { ComplaintsByRegionChart } from '@/components/reports/complaints-by-region';
-import { ReportsAiInsights } from '@/components/reports/ai-insights';
+import { NlpReportGenerator } from '@/components/reports/nlp-report-generator';
+import { ScheduledReports } from '@/components/reports/scheduled-reports';
+import { ReportsAiInsights } from '@/components/reports/reports-ai-insights';
 
 export default function ReportsPage() {
   return (
-    <div className="min-h-screen bg-gray-50/30">
-      <Header title="Reports" subtitle="Conversational & automated reporting" />
+    <div className="min-h-screen bg-gray-50/40">
 
-      <div className="px-8 pb-8">
-        <div className="space-y-0 animate-fade-in-up">
-          <LocationFilterBar />
-          
-          <div className="mt-6">
-            <AskQuestion />
-          </div>
+      {/* ── Page Header ─────────────────────────────────────────────────────── */}
+      <div className="px-8 pt-7 pb-2">
+        <h1 className="text-[22px] font-bold text-gray-900 leading-tight tracking-tight">
+          Reports
+        </h1>
+        <p className="text-[13px] text-gray-500 font-normal mt-0.5">
+          Generate and download analytical reports
+        </p>
+      </div>
 
-          <div>
-            <GeneratedReportsTable />
-          </div>
+      <div className="px-8 pb-10 space-y-6 mt-3">
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <WeeklyPerformanceTrendChart />
-            <ComplaintsByRegionChart />
-          </div>
+        {/* ── 1. NLP Report Generator ───────────────────────────────────────── */}
+        <NlpReportGenerator />
 
-          <div>
-            <ReportsAiInsights />
-          </div>
-        </div>
+        {/* ── 2. Scheduled Reports (8 cards, 2-col grid) ───────────────────── */}
+        <ScheduledReports />
+
+        {/* ── 3. AI Insights & Recommended Actions ─────────────────────────── */}
+        <ReportsAiInsights />
+
       </div>
     </div>
   );
